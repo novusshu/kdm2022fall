@@ -1,0 +1,56 @@
+[13:44:44.130] Global cache location '/Users/book/Library/Caches/typescript/4.8', safe file path '/users/book/desktop/cs phd/projects/kdm2022fall/node_modules/typescript/lib/typingsafelist.json', types map path /users/book/desktop/cs phd/projects/kdm2022fall/node_modules/typescript/lib/typesmap.json
+[13:44:44.131] Processing cache location '/Users/book/Library/Caches/typescript/4.8'
+[13:44:44.131] Trying to find '/Users/book/Library/Caches/typescript/4.8/package.json'...
+[13:44:44.134] Loaded content of '/Users/book/Library/Caches/typescript/4.8/package.json': {"private":true,"dependencies":{"types-registry":"^0.1.611"},"devDependencies":{"@types/base-64":"^1.0.0","@types/bootstrap":"^5.2.4","@types/express":"^4.17.14","@types/file-saver":"^2.0.5","@types/jquery":"^3.5.14","@types/lodash":"^4.14.185","@types/lodash.clone":"^4.5.7","@types/node-sass":"^4.11.3","@types/react":"^18.0.21","@types/react-beautiful-dnd":"^13.1.2","@types/react-bootstrap-table-next":"^4.0.18","@types/react-bootstrap-table2-toolkit":"^2.1.7","@types/react-csv":"^1.1.3","@types/react-dom":"^18.0.6","@types/react-is":"^17.0.3","@types/react-phone-number-input":"^3.0.14","@types/react-speech-recognition":"^3.9.0","@types/react-table":"^7.7.12","@types/react-transition-group":"^4.4.5","@types/scheduler":"^0.16.2","@types/styled-components":"^5.1.26","@types/stylis":"^4.0.2","@types/testing-library__jest-dom":"^5.14.5"}}
+[13:44:44.134] Loaded content of '/Users/book/Library/Caches/typescript/4.8/package-lock.json'
+[13:44:44.140] Adding entry into typings cache: 'base-64' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/base-64/index.d.ts'
+[13:44:44.145] Adding entry into typings cache: 'bootstrap' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/bootstrap/index.d.ts'
+[13:44:44.147] Adding entry into typings cache: 'express' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/express/index.d.ts'
+[13:44:44.148] Adding entry into typings cache: 'file-saver' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/file-saver/index.d.ts'
+[13:44:44.150] Adding entry into typings cache: 'jquery' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/jquery/index.d.ts'
+[13:44:44.152] Adding entry into typings cache: 'lodash' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/lodash/index.d.ts'
+[13:44:44.153] Adding entry into typings cache: 'lodash.clone' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/lodash.clone/index.d.ts'
+[13:44:44.154] Adding entry into typings cache: 'node-sass' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/node-sass/index.d.ts'
+[13:44:44.156] Adding entry into typings cache: 'react' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/react/index.d.ts'
+[13:44:44.157] Adding entry into typings cache: 'react-beautiful-dnd' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/react-beautiful-dnd/index.d.ts'
+[13:44:44.159] Adding entry into typings cache: 'react-bootstrap-table-next' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/react-bootstrap-table-next/index.d.ts'
+[13:44:44.160] Adding entry into typings cache: 'react-bootstrap-table2-toolkit' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/react-bootstrap-table2-toolkit/index.d.ts'
+[13:44:44.161] Adding entry into typings cache: 'react-csv' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/react-csv/index.d.ts'
+[13:44:44.162] Adding entry into typings cache: 'react-dom' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/react-dom/index.d.ts'
+[13:44:44.164] Adding entry into typings cache: 'react-is' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/react-is/index.d.ts'
+[13:44:44.165] Adding entry into typings cache: 'react-phone-number-input' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/react-phone-number-input/index.d.ts'
+[13:44:44.165] Adding entry into typings cache: 'react-speech-recognition' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/react-speech-recognition/index.d.ts'
+[13:44:44.166] Adding entry into typings cache: 'react-table' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/react-table/index.d.ts'
+[13:44:44.167] Adding entry into typings cache: 'react-transition-group' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/react-transition-group/index.d.ts'
+[13:44:44.168] Adding entry into typings cache: 'scheduler' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/scheduler/index.d.ts'
+[13:44:44.168] Adding entry into typings cache: 'styled-components' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/styled-components/index.d.ts'
+[13:44:44.169] Adding entry into typings cache: 'stylis' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/stylis/index.d.ts'
+[13:44:44.169] Adding entry into typings cache: 'testing-library__jest-dom' => '/Users/book/Library/Caches/typescript/4.8/node_modules/@types/testing-library__jest-dom/index.d.ts'
+[13:44:44.169] Finished processing cache location '/Users/book/Library/Caches/typescript/4.8'
+[13:44:44.169] Process id: 76602
+[13:44:44.170] NPM location: /opt/homebrew/Cellar/node/18.9.0/bin/npm (explicit '--npmLocation' not  provided)
+[13:44:44.170] validateDefaultNpmLocation: false
+[13:44:44.170] Npm config file: /Users/book/Library/Caches/typescript/4.8/package.json
+[13:44:44.170] Updating types-registry npm package...
+[13:44:44.170] Exec: /opt/homebrew/Cellar/node/18.9.0/bin/npm install --ignore-scripts types-registry@latest
+[13:44:44.174]     Failed. stdout:
+    stderr:
+    /bin/sh: /opt/homebrew/Cellar/node/18.9.0/bin/npm: No such file or directory
+    
+[13:44:44.174] Updated types-registry npm package
+[13:44:45.334] Got install request {"projectName":"/dev/null/inferredProject1*","fileNames":["/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.es5.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.es2015.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.es2016.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.dom.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.dom.iterable.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.webworker.importscripts.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.scripthost.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.es2015.core.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.es2015.collection.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.es2015.generator.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.es2015.iterable.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.es2015.promise.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.es2015.proxy.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.es2015.reflect.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.es2015.symbol.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.es2016.array.include.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/node_modules/typescript/lib/lib.es2016.full.d.ts","/Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/firebasedb.js"],"compilerOptions":{"module":1,"target":3,"jsx":1,"allowJs":true,"allowSyntheticDefaultImports":true,"allowNonTsExtensions":true,"noEmitForJsFiles":true,"maxNodeModuleJsDepth":2},"typeAcquisition":{"enable":true,"include":[],"exclude":[]},"unresolvedImports":[],"projectRootPath":"/Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase","kind":"discover"}
+[13:44:45.339] Loaded safelist from types map file '/users/book/desktop/cs phd/projects/kdm2022fall/node_modules/typescript/lib/typesmap.json'
+[13:44:45.340] Explicitly included types: []
+[13:44:45.340] Inferred typings from unresolved imports: []
+[13:44:45.340] Result: {"cachedTypingPaths":[],"newTypingNames":[],"filesToWatch":["/Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/bower_components","/Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/node_modules"]}
+[13:44:45.340] Finished typings discovery: {"cachedTypingPaths":[],"newTypingNames":[],"filesToWatch":["/Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/bower_components","/Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/node_modules"]}
+[13:44:45.340] DirectoryWatcher:: Added:: WatchInfo: /Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/bower_components
+[13:44:45.340] DirectoryWatcher:: Added:: WatchInfo: /Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/bower_components 1 undefined Project: /dev/null/inferredProject1* watcher already invoked: false
+[13:44:45.341] Elapsed:: 0.382457971572876ms DirectoryWatcher:: Added:: WatchInfo: /Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/bower_components 1 undefined Project: /dev/null/inferredProject1* watcher already invoked: false
+[13:44:45.341] DirectoryWatcher:: Added:: WatchInfo: /Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/node_modules
+[13:44:45.341] DirectoryWatcher:: Added:: WatchInfo: /Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/node_modules 1 undefined Project: /dev/null/inferredProject1* watcher already invoked: false
+[13:44:45.341] Elapsed:: 0.029708147048950195ms DirectoryWatcher:: Added:: WatchInfo: /Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/node_modules 1 undefined Project: /dev/null/inferredProject1* watcher already invoked: false
+[13:44:45.341] Sending response:
+    {"projectName":"/dev/null/inferredProject1*","typeAcquisition":{"enable":true,"include":[],"exclude":[]},"compilerOptions":{"module":1,"target":3,"jsx":1,"allowJs":true,"allowSyntheticDefaultImports":true,"allowNonTsExtensions":true,"noEmitForJsFiles":true,"maxNodeModuleJsDepth":2},"typings":[],"unresolvedImports":[],"kind":"action::set"}
+[13:44:45.341] Response has been sent.
+[13:44:45.341] No new typings were requested as a result of typings discovery
