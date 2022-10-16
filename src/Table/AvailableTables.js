@@ -2,10 +2,8 @@ import { Table } from "./SampleGrid";
 import theme from "../Components/theme";
 import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button } from "react-bootstrap";
-
 import { db } from "../Firebase/firebasedb";
 import styled from "styled-components";
-
 import {
   doc,
   setDoc,

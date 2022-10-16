@@ -8,6 +8,8 @@ import {
 } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthComponent } from "../Skeleton/AuthComponent";
+import { Header } from "../Skeleton/Header";
+import { Footer } from "../Skeleton/Footer";
 
 import { Input } from "../Components";
 
@@ -46,12 +48,6 @@ const LoginForm = () => {
 
   return (
     <>
-    <AuthComponent 
-    user={user} 
-    setUser={setUser}
-    auth={auth}
-    navigate={navigate} />
-
     <div className="container">
       <hr />
       <div className="card m-3 mx-auto col-lg-8">

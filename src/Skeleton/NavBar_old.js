@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Navbar, Nav, NavDropdown, Container, Button,  Modal } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown, Container, Button, Modal } from "react-bootstrap";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -7,7 +7,7 @@ import { AiOutlineLogout, AiOutlineProfile } from "react-icons/ai";
 import { FcAssistant } from "react-icons/fc";
 import { FaUser, FaUserAlt, FaUserGraduate, FaUserTie } from "react-icons/fa";
 import { GrUserManager, GrUserExpert } from "react-icons/gr";
-import { AuthComponent} from "./AuthComponent";
+import { AuthComponent } from "./AuthComponent";
 
 import { db } from "../Firebase/firebasedb";
 
@@ -20,7 +20,7 @@ export const NavBar = ({ setUserDataExternal, render = true }) => {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [redirectDestination, setRedirectDestination] = useState(null);
   const navigate = useNavigate();
-  
+
   const [showLogOut, setShowLogOut] = useState(false);
   const handleClose = () => setShowLogOut(false);
   const handleShow = () => setShowLogOut(true);
@@ -43,9 +43,9 @@ export const NavBar = ({ setUserDataExternal, render = true }) => {
 
   return (
     <div>
-      <AuthComponent 
-      user={user}
-       setUser={setUser}
+      <AuthComponent
+        user={user}
+        setUser={setUser}
         auth={auth} />
       {render && userData && (
         <Navbar bg="light" expand="lg" className="py-3 fs-4">

@@ -7,11 +7,9 @@ import {
 } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../Firebase/firebasedb";
+import { auth, db } from "../Firebase/firebasedb";
 
-export const AuthComponent = ({ user, setUser, auth, navigate }) => {
-  const [redirectDestination, setRedirectDestination] = useState(null);
-
+export const Auth = ({ user, setUser, navigate, redirectDestination }) => {
   useEffect(() => {
     if (shouldRedirect) {
       navigate(redirectDestination);

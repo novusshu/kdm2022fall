@@ -4,7 +4,6 @@ import { Header } from "./Skeleton/Header";
 import {LandingPage} from "./Markting/LandingPage"
 import { Footer } from "./Skeleton/Footer";
 import DashboardAdmin from "./Account/DashboardAdmin"
-import { AuthComponent } from "./Skeleton/AuthComponent";
 
 const Home = ({user}) => {
   return (
