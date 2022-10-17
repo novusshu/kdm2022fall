@@ -1536,3 +1536,18 @@
     {"projectName":"/dev/null/inferredProject16*","typeAcquisition":{"enable":true,"include":[],"exclude":[]},"compilerOptions":{"module":1,"target":3,"jsx":1,"allowJs":true,"allowSyntheticDefaultImports":true,"allowNonTsExtensions":true,"noEmitForJsFiles":true,"maxNodeModuleJsDepth":2},"typings":[],"unresolvedImports":[],"kind":"action::set"}
 [20:13:46.686] Response has been sent.
 [20:13:46.686] No new typings were requested as a result of typings discovery
+[10:52:13.620] Got install request {"projectName":"/dev/null/inferredProject16*","fileNames":[],"compilerOptions":{"module":1,"target":3,"jsx":1,"allowJs":true,"allowSyntheticDefaultImports":true,"allowNonTsExtensions":true,"noEmitForJsFiles":true},"typeAcquisition":{"enable":true,"include":[],"exclude":[]},"unresolvedImports":[],"projectRootPath":"/Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Skeleton","kind":"discover"}
+[10:52:13.621] Explicitly included types: []
+[10:52:13.622] Inferred typings from unresolved imports: []
+[10:52:13.623] Result: {"cachedTypingPaths":[],"newTypingNames":[],"filesToWatch":["/Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Skeleton/bower_components","/Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Skeleton/node_modules"]}
+[10:52:13.623] Finished typings discovery: {"cachedTypingPaths":[],"newTypingNames":[],"filesToWatch":["/Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Skeleton/bower_components","/Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Skeleton/node_modules"]}
+[10:52:13.623] DirectoryWatcher:: Closed:: WatchInfo: /Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/bower_components
+[10:52:13.623] DirectoryWatcher:: Close:: WatchInfo: /Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/bower_components 1 undefined Project: /dev/null/inferredProject16* watcher already invoked: false
+[10:52:13.624] Elapsed:: 0.3543749451637268ms DirectoryWatcher:: Close:: WatchInfo: /Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/bower_components 1 undefined Project: /dev/null/inferredProject16* watcher already invoked: false
+[10:52:13.624] DirectoryWatcher:: Closed:: WatchInfo: /Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/node_modules
+[10:52:13.624] DirectoryWatcher:: Close:: WatchInfo: /Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/node_modules 1 undefined Project: /dev/null/inferredProject16* watcher already invoked: false
+[10:52:13.624] Elapsed:: 0.002375006675720215ms DirectoryWatcher:: Close:: WatchInfo: /Users/book/Desktop/cs PhD/projects/kdm2022fall/src/Firebase/node_modules 1 undefined Project: /dev/null/inferredProject16* watcher already invoked: false
+[10:52:13.624] Sending response:
+    {"projectName":"/dev/null/inferredProject16*","typeAcquisition":{"enable":true,"include":[],"exclude":[]},"compilerOptions":{"module":1,"target":3,"jsx":1,"allowJs":true,"allowSyntheticDefaultImports":true,"allowNonTsExtensions":true,"noEmitForJsFiles":true},"typings":[],"unresolvedImports":[],"kind":"action::set"}
+[10:52:13.625] Response has been sent.
+[10:52:13.625] No new typings were requested as a result of typings discovery

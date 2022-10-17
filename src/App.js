@@ -1,22 +1,20 @@
 import React, { useEffect } from "react";
-import { Routes, Route, BrowserRouter  } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import {
   // isMobile,
   isAndroid,
   isIOS,
 } from "react-device-detect";
 import "bootstrap/dist/css/bootstrap.min.css";
-import './Markting/assets/css/style.css'
-import Home from "./Home"
-import LoginForm from "./Auth/LoginForm";
-import RegisterForm from "./Auth/RegisterForm";
-import TableFormRendering from "./Table/TableFormRendering";
-import CreateGrid from "./Table/CreateGrid";
-import TableCsvUpload from "./Table/TableCsvUpload";
-import ForgotPassword from "./Auth/ForgotPassword";
-import { Footer } from "./Skeleton/Footer";
-import {Header} from './Skeleton/Header'
-// import EditProfilePage from "./Auth/EditProfilePage";
+import './assets/css/style.css'
+import { UserAuthContextProvider } from "./context/UserAuthContext";
+import Home from "./pages/Home"
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword";
+// import TableFormRendering from "./features/Table/TableFormRendering";
+// import CreateGrid from "./features/Table/CreateGrid";
+// import TableCsvUpload from "./features/Table/TableCsvUpload";
 
 
 function App() {
@@ -36,26 +34,17 @@ function App() {
   return (
     // <Container className="shadow p-3 mb-5 bg-white rounded">
     <>
-      <Header />
-      <BrowserRouter>
+      <UserAuthContextProvider>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />
-          {/* <Route path="/edit-profile" element={<EditProfilePage />} /> */}
-          <Route path="/tablecsvupload" element={<TableCsvUpload />}>
-            <Route path=":formId" element={<TableCsvUpload />} />
-          </Route>
-          <Route path="/spreadsheet" element={<CreateGrid />} />
-          <Route path="/tables">
-            <Route path=":formId" element={<TableFormRendering />}>
-              {/* <Route path=":action" element={<Tables />}></Route> */}
-            </Route>
-          </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
+          {/* <Route path="/edit-profile" element={<EditProfilePage />} /> */}
+          
+
         </Routes>
-      </BrowserRouter>
-      <Footer />
+      </UserAuthContextProvider>
     </>
     // </Container>
   );

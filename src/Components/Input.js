@@ -45,7 +45,7 @@ export const Input = ({
             style={{
               marginLeft: "2px",
               marginBottom: "3px",
-              color: highlightColor,
+              // color: highlightColor,
               fontSize: "17px",
             }}
             data-tip={instructions}
