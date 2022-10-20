@@ -8,14 +8,15 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import './assets/css/style.css'
 import { UserAuthContextProvider } from "./context/UserAuthContext";
-import Home from "./pages/Home"
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 // import TableFormRendering from "./features/Table/TableFormRendering";
 // import CreateGrid from "./features/Table/CreateGrid";
-// import TableCsvUpload from "./features/Table/TableCsvUpload";
-
+import TableCsvUpload from "./features/Table/TableCsvUpload";
+import {LayoutPublic, LayoutPrivate} from "./layouts/Layouts"
+import Dashboard from "./pages/Dashboard";
+import { LandingPage } from "./pages/LandingPage";
 
 function App() {
   useEffect(() => {
@@ -32,21 +33,25 @@ function App() {
   }, []);
 
   return (
-    // <Container className="shadow p-3 mb-5 bg-white rounded">
     <>
       <UserAuthContextProvider>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/forgotpassword" element={<ForgotPassword />} />
-          {/* <Route path="/edit-profile" element={<EditProfilePage />} /> */}
-          
+          <Route element={<LayoutPublic />}>
+              <Route path="/"  element={<LandingPage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/forgotpassword" element={<ForgotPassword />} />
+          </Route>
+          <Route element={<LayoutPrivate />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              {/* <Route path="/edit-profile" element={<EditProfilePage />} /> */}
+              {/* <Route path="*" element={<NotFound />} /> */}
+              <Route path="/tablecsvupload" element={<TableCsvUpload />} />
+          </Route>
 
         </Routes>
       </UserAuthContextProvider>
     </>
-    // </Container>
   );
 
   /* <TestSet /> */

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { db } from "../Firebase/firebasedb";
+import { db } from "../features/firebasedb";
 import {
   doc,
   setDoc,
@@ -16,12 +16,6 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { format, parse, isValid, set } from "date-fns";
 import { faker } from "@faker-js/faker";
-import {
-  atypeOptionsCompat,
-  isCampusLead,
-  isHubLead,
-  isStudentOrMentor,
-} from "../Fixed Sources/accountTypes";
 import {
   AiTwotoneUnlock,
   AiOutlineUnlock,
@@ -159,189 +153,7 @@ function generateRandomNicknames(rhyme = false) {
   }
   return nickname;
 }
-export const FakeNameDropDown = ({ userData, errors, setValue }) => {
-  const numberOfNames = 5;
-  let initList = [];
-  let initName = "";
-  if (
-    userData &&
-    isStudentOrMentor(userData.atype) &&
-    userData.nickname &&
-    userData.nickname != ""
-  ) {
-    initList.push(userData.nickname);
-    initName = userData.nickname;
-  }
-  // const { watch,
-  //     register,
-  //     formState: { errors }
-  // } = useFormContext();
-  // console.log('userData', userData)
-  // console.log('initList', initList)
-  const [nicknameList, setNicknameList] = useState([...initList]);
-  const [takenNames, setTakenNames] = useState([]);
-  const [refreshClick, setRefreshClick] = useState(0);
 
-  // console.log('atype', atype)
-
-  useEffect(() => {
-    const q = query(collection(db, "Users"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const allNicknamesServer = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-
-        if (data.nickname && data.nickname != "")
-          allNicknamesServer.push(data.nickname);
-      });
-      console.log("Current taken names: ", allNicknamesServer);
-      const newNameList = [...Array(numberOfNames)].map((item, i) => {
-        let taken = true;
-        let nickname = "";
-        while (taken) {
-          nickname = generateRandomNicknames(false);
-          if (!allNicknamesServer.includes(nickname)) {
-            taken = false;
-          }
-        }
-
-        return nickname;
-      });
-      const newNameListRhyme = [...Array(numberOfNames)].map((item, i) => {
-        let taken = true;
-        let nickname = "";
-        while (taken) {
-          nickname = generateRandomNicknames(true);
-          if (!allNicknamesServer.includes(nickname)) {
-            taken = false;
-          }
-        }
-
-        return nickname;
-      });
-      setNicknameList([...initList, ...newNameListRhyme, ...newNameList]);
-    });
-  }, [refreshClick]);
-  // console.log('errors', errors)
-  // const { handleSubmit, reset, register, setValue, formState: { errors } } = methods;
-  const CustomMenu = React.forwardRef(
-    ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
-      const [value, setValue] = useState("");
-
-      return (
-        <div
-          ref={ref}
-          style={style}
-          className={className}
-          aria-labelledby={labeledBy}
-        >
-          <Form.Control
-            autoFocus
-            className="mx-3 my-2 w-auto"
-            placeholder="Type to filter..."
-            onChange={(e) => setValue(e.target.value)}
-            value={value}
-          />
-          <ul className="list-unstyled">
-            {React.Children.toArray(children).filter(
-              (child) =>
-                !value ||
-                child.props.children.toLowerCase().startsWith(value) ||
-                child.props.children.startsWith(value)
-            )}
-          </ul>
-        </div>
-      );
-    }
-  );
-  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <Button
-      variant={
-        errors["nickname"] && !currentEventKey
-          ? "outline-danger"
-          : "outline-theme"
-      }
-      href=""
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-      &#x25bc;
-    </Button>
-  ));
-  const [currentEventKey, setCurrentEventKey] = useState(initName);
-  return (
-    <div>
-      <ReactTooltip backgroundColor={theme.highlightColor} />
-
-      <Dropdown
-        className="col-md-6 mt-2 "
-        onSelect={(eventKey, event) => {
-          console.log("setValue", setValue);
-          setValue("nickname", eventKey);
-          setCurrentEventKey(eventKey);
-        }}
-      >
-        <Dropdown.Toggle
-          id="dropdown-custom-components"
-          variant="outline-theme"
-        >
-          Select Your Nickname: <b>{currentEventKey}</b>
-        </Dropdown.Toggle>
-
-        <Dropdown.Menu>
-          <div style={{ textAlign: "center" }}>
-            <Button
-              className="mb-2"
-              variant="outline-theme"
-              size="sm"
-              onClick={() => {
-                setRefreshClick(refreshClick + 1);
-              }}
-            >
-              <BsArrowCounterclockwise
-                style={{
-                  marginRight: "3px",
-                  color: theme.highlightColor,
-                  fontSize: "16px",
-                }}
-              />
-              Refresh Names
-            </Button>
-          </div>
-          {nicknameList.map((nName) => {
-            return (
-              <Dropdown.Item eventKey={nName} active={nName == currentEventKey}>
-                {nName}
-              </Dropdown.Item>
-            );
-          })}
-        </Dropdown.Menu>
-        <AiOutlineLock
-          style={{
-            marginLeft: "2px",
-            marginBottom: "3px",
-            color: "green",
-            fontSize: "17px",
-          }}
-          data-tip={`This name will be shown to other users instead.`}
-        />
-      </Dropdown>
-
-      <div className="is-invalid">
-        {/* <div className="invalid-feedback">hello22</div> */}
-      </div>
-      <div className="invalid-feedback mb-2">
-        {errors["nickname"] && !currentEventKey
-          ? errors["nickname"].message
-          : ""}
-      </div>
-    </div>
-  );
-};
 export const encryptableQuestionTypes = [
   "short_answer",
   "long_answer",
@@ -356,68 +168,6 @@ export const requirableQuestionTypes = [
   "phone_number",
   "file_upload",
 ];
-export const FormLibrary = ({
-  setFormLibraryExternal = null,
-  accountType = null,
-  publishedOnly = true,
-}) => {
-  const [formLibrary, setFormLibrary] = useState([]);
-  useEffect(() => {
-    const formLibraryRef = collection(db, "form_library");
-    const q = query(formLibraryRef);
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const formLibraryServer = [];
-      let foundFormToEdit = false;
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        // console.log('data', data)
-        // console.log('Utils', accountType, data.allowedRoles)
-        if (publishedOnly) {
-          if (data.status == "published") {
-            if (
-              accountType &&
-              data.allowedRoles &&
-              data.allowedRoles.includes(accountType)
-            ) {
-              formLibraryServer.push(data);
-            } else {
-              if (accountType) {
-                // console.log('accountType', accountType)
-                if (isCampusLead(accountType) || isHubLead(accountType)) {
-                  // console.log('qualified')
-
-                  formLibraryServer.push(data);
-                }
-              }
-            }
-          }
-        } else {
-          if (
-            accountType &&
-            data.allowedRoles &&
-            data.allowedRoles.includes(accountType)
-          ) {
-            formLibraryServer.push(data);
-          } else {
-            if (accountType) {
-              // console.log('accountType', accountType)
-              if (isCampusLead(accountType) || isHubLead(accountType)) {
-                // console.log('qualified')
-
-                formLibraryServer.push(data);
-              }
-            }
-          }
-        }
-      });
-      if (setFormLibraryExternal) {
-        setFormLibraryExternal([...formLibraryServer]);
-      }
-      setFormLibrary([...formLibraryServer]);
-    });
-  }, []);
-  return <></>;
-};
 export const formatDate = (date) => {
   if (date) {
     const createdDate = date.toDate().toDateString();

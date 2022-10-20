@@ -24,69 +24,11 @@ import * as Yup from "yup";
 import { Textarea } from "../components/Textarea";
 import Card from "react-bootstrap/Card";
 
-export default function Dashboard({ role }) {
-  const auth = getAuth();
-  const [user, setUser] = useState(null);
-  const [userData, setUserData] = useState(false);
-  const [formMetadata, setFormMetadata] = useState(null);
-
-  const [shouldRedirect, setShouldRedirect] = useState(false);
-  const [redirectDestination, setRedirectDestination] = useState("/");
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        // const uid = user.uid;
-        // ...
-        setUser(user);
-      } else {
-        setRedirectDestination("/");
-        setShouldRedirect(true);
-      }
-    });
-    return () => unsubscribe();
-  }, [auth]);
-
-  useEffect(() => {
-    if (user) {
-      const docRef = doc(db, "Users", user.uid);
-      getDoc(docRef).then((docSnap) => {
-        if (docSnap.exists()) {
-          console.log("Document data:", docSnap.data());
-          const data = docSnap.data();
-          setUserData(data);
-        } else {
-        }
-      });
-    }
-  }, [user]);
-
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (shouldRedirect) {
-      navigate(redirectDestination);
-    }
-  }, [shouldRedirect, redirectDestination, navigate]);
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const logOut = () => {
-    setShow(false);
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        console.log("Signed out successfully!");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+export default function Dashboard() {
 
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      {/* <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Logout Confirmation</Modal.Title>
         </Modal.Header>
@@ -99,11 +41,9 @@ export default function Dashboard({ role }) {
             Yes!
           </Button>
         </Modal.Footer>
-      </Modal>
-      {redirectDestination && (
+      </Modal> */}
         <main>
-          <h3 className="mt-3 text-center">Welcome, {role}!</h3>
-          {/* <h3><b>Manual Forms</b></h3> */}
+          <h3 className="mt-3 text-center">Welcome!</h3>
           <p></p>
           <div>
             <Dropdown style={{ display: "inline" }}>
@@ -120,7 +60,6 @@ export default function Dashboard({ role }) {
             </Dropdown>
           </div>
         </main>
-      )}
     </>
   );
 }

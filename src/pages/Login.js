@@ -1,27 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
-import { Header } from "../layouts/Header";
-import { Footer } from "../layouts/Footer";
 import { useUserAuth } from "../context/UserAuthContext";
 import { Input } from "../components/Input";
 
-const LoginForm = () => {
-  const { logIn, user } = useUserAuth();
+const LoginForm = ( ) => {
+  const { logIn } = useUserAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if(user) {
-      navigate("/")
-    }
-  }, [user])
 
   const methods = useForm();
   const { handleSubmit, reset } = methods;
   const loginSubmit = async (data) => {
     try {
       await logIn(data.email, data.password);
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
         // const errorCode = error.code;
         const errorMessage = err.message;
@@ -31,13 +23,13 @@ const LoginForm = () => {
 
   return (
     <>
-    <Header /> 
-    <hr />
-    <div className="container mt-5">
-      <hr />
-      <div className="card m-3 mx-auto col-lg-8">
-        <h5 className="card-header text-center">Log In</h5>
-        <div className="card-body">
+    <div className="container mt-5 mb-5">
+      {/* <hr className="m-5"/> */}
+      <div className="card m-5 mx-auto col-lg-8">
+      <div className="card-header">
+        <h5 className="text-center card-title m-2">Log In</h5>
+        </div>
+        <div className="card-body m-4">
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(loginSubmit)}>
               <div className="form-row">
@@ -84,7 +76,6 @@ const LoginForm = () => {
         </div>
       </div>
     </div>
-    <Footer />
     </>
   );
 };

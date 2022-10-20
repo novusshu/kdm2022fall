@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Input, RadioGroup } from "../Components";
 import { db } from "../firebasedb";
 import {
   doc,
@@ -17,20 +16,11 @@ import {
   where,
   onSnapshot,
 } from "firebase/firestore";
-import { Button } from "react-bootstrap";
-import Dropdown from "react-bootstrap/Dropdown";
+import { Button, Dropdown } from "react-bootstrap";
 import ReactTooltip from "react-tooltip";
 import { AiFillQuestionCircle, AiFillCloseCircle } from "react-icons/ai";
 import theme from "../Components/theme";
-// import "./automatic_form.css";
-import { institutionsList } from "../Fixed Sources/institutions";
-import {
-  allRoles,
-  formPrefixes,
-  formPrefixes2,
-  isCampusLead,
-  isHubLead,
-} from "../Fixed Sources/accountTypes";
+import { Input, RadioGroup } from "../Components/Input";
 import Loading from "../Components/Loading";
 
 const CustomMenu = React.forwardRef(
@@ -345,12 +335,6 @@ export const NewTableSummary = ({
       await alert(`Form ${formID} written to Firebase successfully`);
     }
   };
-
-  const [currentAllowedInstitutions, setCurrentAllowedInstitutions] = useState(
-    []
-  );
-
-  const [currentFormDomain, setCurrentFormDomain] = useState("Common");
 
   return (
     <div>

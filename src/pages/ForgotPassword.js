@@ -1,18 +1,12 @@
 import React, {useEffect} from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { useUserAuth } from "../context/UserAuthContext";
 import { Input } from "../components/Input";
 
 const ForgotPassword = () => {
-  const { resetPass, user } = useUserAuth();
+  const { resetPass} = useUserAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if(user) {
-      navigate("/")
-    }
-  }, [])
 
   const methods = useForm();
   const { handleSubmit } = methods;
@@ -32,23 +26,11 @@ const ForgotPassword = () => {
           alert("Email you entered does not exists");
         });
     }
-
-    // signInWithEmailAndPassword(auth, data.email, data.password)
-    //   .then((userCredential) => {
-    //     // Signed in
-    //     setUser(userCredential.user);
-    //     // ...
-    //   })
-    //   .catch((error) => {
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     alert(errorMessage);
-    //   });
   };
 
   return (
-    <div className="container">
-      <hr />
+    <div className="container mt-5 mb-5">
+      {/* <hr /> */}
       <div className="card m-3 mx-auto col-lg-8">
         <h5 className="card-header text-center">Password Reset</h5>
         <div className="card-body">

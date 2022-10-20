@@ -7,12 +7,10 @@ import {
   doc,
   setDoc,
 } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { Input } from "../components/Input";
 import { db } from "../features/firebasedb";
 import { useUserAuth } from "../context/UserAuthContext";
-import {Header} from "../layouts/Header"
-import { Footer } from "../layouts/Footer";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required("Required"),
@@ -30,14 +28,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const Signup = () => {
-  const { signUp, user } = useUserAuth();
+  const { signUp} = useUserAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if(user) {
-      navigate("/")
-    }
-  }, [user])
 
   const formOptions = { resolver: yupResolver(validationSchema) };
   const methods = useForm(formOptions);
@@ -53,7 +45,7 @@ const Signup = () => {
       console.log("User successfully created and signed in!");
         console.log(userCredential);
       data.userID = userCredential.user.uid;
-      navigate("/");
+      navigate("/dashboard");
       await writeToFirebase(data);
     } catch (err) {
       console.log(err.message);
@@ -67,18 +59,18 @@ const Signup = () => {
 
   return (
     <>
-    <Header />
     <div className="container mt-5">
-      <hr />
-      <div className="row d-flex justify-content-center align-items-center h-100">
-        <div className="card m-3 border-light">
-          <header className="card-header">
-            <Link className="float-end btn btn-outline-primary" to="/login">
+      {/* <hr /> */}
+      {/* <div className="row d-flex justify-content-center align-items-center h-100"> */}
+        {/* <div className="card m-3 border-light"> */}
+        <div className="card m-5 mx-auto col-lg-8">
+          <div className="card-header">
+            <Link className="float-end btn btn-outline-primary m-2" to="/login">
               Log in
             </Link>
-            <h4 className="card-title mt-2">Sign up</h4>
-          </header>
-          <div className="card-body">
+            <h4 className="card-title m-2">Sign up</h4>
+          </div>
+          <div className="card-body m-4">
             <FormProvider {...methods}>
               <form onSubmit={handleSubmit(SignupSubmit)}>
                 <div className="row">
@@ -137,9 +129,8 @@ const Signup = () => {
             Have an account? <Link to="/login">Log in</Link>
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </div>
-     <Footer />
      </>
   );
 };

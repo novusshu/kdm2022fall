@@ -39,7 +39,7 @@ export const Input = ({
           required && errors[name] && "text-danger"
         }`}
       >
-        {label} {required ? "*" : <i>(Optional)</i>}
+        {label} 
         {instructions && (
           <AiFillQuestionCircle
             style={{

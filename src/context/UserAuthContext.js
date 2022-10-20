@@ -6,12 +6,18 @@ import {
   signOut,
   sendPasswordResetEmail
 } from "firebase/auth";
+import {
+  doc,
+  getDoc,
+} from "firebase/firestore";
+import { db } from "../features/firebasedb";
 import { auth } from "../features/firebasedb";
 
 const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
+  const [userData, setUserData] = useState(false)
 
   function logIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
@@ -29,7 +35,7 @@ export function UserAuthContextProvider({ children }) {
  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
-      console.log("Auth", currentuser);
+      // console.log("Auth", currentuser);
       setUser(currentuser);
     });
 
@@ -38,9 +44,25 @@ export function UserAuthContextProvider({ children }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      const docRef = doc(db, "Users", user.uid);
+      getDoc(docRef).then((docSnap) => {
+        if (docSnap.exists()) {
+          console.log("Document data:", docSnap.data());
+          const data = docSnap.data();
+          setUserData(data);
+        } else {
+        }
+      });
+    }
+  }, [user]);
+
+  // console.log("user: ", user)
+
   return (
     <userAuthContext.Provider
-      value={{ user, logIn, signUp, logOut, resetPass }}
+      value={{ user, userData, logIn, signUp, logOut, resetPass }}
     >
       {children}
     </userAuthContext.Provider>

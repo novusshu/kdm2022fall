@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { db } from "../firebasedb";
 import {
   doc,
   setDoc,
@@ -18,69 +17,20 @@ import {
   usePapaParse,
 } from "react-papaparse";
 import { Modal, Button } from "react-bootstrap";
-import { Header } from "../Skeleton/Header";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import styled from "styled-components";
-import AvailableTables from "./AvailableTables";
-import { Table } from "./SampleGrid";
+import { db } from "../../features/firebasedb";
+// import { Table } from "./SampleGrid";
 import * as XLSX from "xlsx";
 import { FileDrop } from "react-file-drop";
-import "./filedrop.css";
-import theme from "../Components/theme";
+// import "./filedrop.css";
+// import theme from "../components/theme";
 import { NewTableSummary } from "./NewTableSummary";
-import { makeid, RoleValidationComponent } from "../Components/Utils";
+import { makeid, RoleValidationComponent } from "../../components/Utils";
 import { Table as BootstrapTable } from "react-bootstrap";
-import { allRoles } from "../Fixed Sources/accountTypes";
 import { useParams } from "react-router-dom";
+import { useUserAuth } from "../../context/UserAuthContext";
 
-const GREY = "#CCC";
-const GREY_LIGHT = "rgba(255, 255, 255, 0.4)";
-const DEFAULT_REMOVE_HOVER_COLOR = "#A01919";
-const REMOVE_HOVER_COLOR_LIGHT = lightenDarkenColor(
-  DEFAULT_REMOVE_HOVER_COLOR,
-  40
-);
-
-const GREY_DIM = "#686868";
-const Styles = styled.div`
-  padding: 1rem;
-
-  table {
-    border-spacing: 0;
-    border: 1px solid black;
-
-    tr {
-      :last-child {
-        td {
-          border-bottom: 0;
-        }
-      }
-    }
-
-    th,
-    td {
-      margin: 0;
-      padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-
-      :last-child {
-        border-right: 0;
-      }
-    }
-  }
-
-  .pagination {
-    padding: 0.5rem;
-  }
-`;
-
-const dropZoneStyles = {
-  borderRadius: 20,
-  border: "2px dashed lightgray",
-  color: "black",
-  padding: 20,
-};
 
 const UploadedList = ({
   latestUnuploadedForm,
@@ -163,9 +113,6 @@ const UploadedList = ({
 
 export default function TableCsvUpload() {
   //Handles Authentication and Redirection
-  const auth = getAuth();
-  const [user, setUser] = useState(null);
-  const [userData, setUserData] = useState(false);
   const [latestUnuploadedForm, setLatestUnuploadedForm] = useState([]);
   const [blinkingFormID, setBlinkingFormID] = useState(null);
   const [formID, setFormID] = useState(null);
@@ -176,6 +123,8 @@ export default function TableCsvUpload() {
 
   // console.log("edit form: ", formId);
   // check formID is part of the list
+
+  const { user } = useUserAuth();
 
   useEffect(() => {
     if (blinkingFormID) {
@@ -312,17 +261,6 @@ export default function TableCsvUpload() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const logOut = () => {
-    setShow(false);
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        console.log("Signed out successfully!");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   const blockRef = useRef();
   const handleScroll = () => {
@@ -336,30 +274,13 @@ export default function TableCsvUpload() {
   /////
   return (
     <div>
-      {/* <NavBar setUserDataExternal={setUserData} /> */}
-
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Logout Confirmation</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure you would like to log out?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button variant="danger" onClick={logOut}>
-            Yes!
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <div style={dropZoneStyles}>
+      <div >
         <div>
           <h3
             style={{
               fontWeight: "bold",
               textAlign: "center",
-              color: theme.highlightColor,
+              // color: theme.highlightColor,
             }}
           >
             {formId
@@ -427,25 +348,6 @@ export default function TableCsvUpload() {
           />
         </div>
       )}
-
-      {/* {user && userData && ( */}
-      {/*   <Styles> */}
-      {/*     <AvailableTables */}
-      {/*       userID={user.uid} */}
-      {/*       accountType={userData.atype} */}
-      {/*       userData={userData} */}
-      {/*     /> */}
-      {/*     {/\* <Table */}
-      {/*       columns={columns} */}
-      {/*       data={formUploadHistory} */}
-      {/*       fileInputRef={fileInputRef} */}
-      {/*       setFormID={setFormID} */}
-      {/*       setLatestUnuploadedForm={setLatestUnuploadedForm} */}
-      {/*       blinkingFormID={blinkingFormID} */}
-      {/*       userData={userData} */}
-      {/*     /> *\/} */}
-      {/*   </Styles> */}
-      {/* )} */}
     </div>
   );
 }
