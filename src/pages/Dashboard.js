@@ -1,28 +1,5 @@
-import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { Modal, Button, ListGroup } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-// import { Alert } from "react-bootstrap";
-import { db } from "../features/firebasedb";
-import {
-  doc,
-  getDoc,
-  setDoc,
-  onSnapshot,
-  serverTimestamp,
-  query,
-  collection,
-} from "firebase/firestore";
 import Dropdown from "react-bootstrap/Dropdown";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import { AiFillQuestionCircle, AiFillCloseCircle } from "react-icons/ai";
-import ReactTooltip from "react-tooltip";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
-import { Textarea } from "../components/Textarea";
-import Card from "react-bootstrap/Card";
+
 
 export default function Dashboard() {
 

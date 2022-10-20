@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
-import { useNavigate, Link, Outlet} from "react-router-dom";
+import React, { useEffect,} from "react";
+import { useNavigate, Outlet} from "react-router-dom";
 import { Footer } from "./Footer";
 import { useUserAuth } from "../context/UserAuthContext";
 import { PublicHeader, PrivateHeader } from "./Headers";

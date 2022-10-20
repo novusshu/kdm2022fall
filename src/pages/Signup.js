@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { useForm, FormProvider} from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -7,7 +6,7 @@ import {
   doc,
   setDoc,
 } from "firebase/firestore";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { Input } from "../components/Input";
 import { db } from "../features/firebasedb";
 import { useUserAuth } from "../context/UserAuthContext";
@@ -36,7 +35,7 @@ const Signup = () => {
   const {
     handleSubmit,
     reset,
-    formState: { errors },
+    // formState: { errors },
   } = methods;
   const SignupSubmit = async (data, e) => {
     console.log(data);

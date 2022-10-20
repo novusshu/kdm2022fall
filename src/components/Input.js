@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import ReactTooltip from "react-tooltip";
+// import ReactTooltip from "react-tooltip";
 import {
-  AiFillLock,
   AiFillQuestionCircle,
-  AiOutlineLock,
 } from "react-icons/ai";
 
 export const Input = ({
@@ -23,7 +20,6 @@ export const Input = ({
   ...rest
 }) => {
   const {
-    watch,
     register,
     formState: { errors },
   } = useFormContext();

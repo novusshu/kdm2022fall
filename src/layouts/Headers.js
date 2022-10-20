@@ -1,11 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
 import {
   Navbar,
   Nav,
   NavDropdown,
   Container,
-  Button,
-  Modal,
 } from "react-bootstrap";
 import { useNavigate} from "react-router-dom";
 import "../assets/css/style.css";
