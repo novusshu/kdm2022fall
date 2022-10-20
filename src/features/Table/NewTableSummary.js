@@ -72,7 +72,7 @@ export const NewTableSummary = ({
       .required("Cannot be empty!")
       .test(
         "Required",
-        "Another form with this name already exists! If the form is yours, please upload a revised version from the table below.",
+        "Another form with this name already exists!",
         (result) => {
           let valid = true;
           if (formLibrary) {
