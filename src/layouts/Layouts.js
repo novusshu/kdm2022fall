@@ -12,7 +12,7 @@ export const LayoutPublic = () => {
       if(user) {
         navigate("/dashboard")
       } 
-    }, [user])
+    }, [user, navigate])
 
     return ( 
       <>
@@ -35,7 +35,7 @@ export const LayoutPrivate = () => {
     if(user === null) {
       navigate("/login")
     } 
-  }, [user])
+  }, [user, navigate])
 
   return ( 
     <>
