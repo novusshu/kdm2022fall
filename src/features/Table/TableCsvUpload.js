@@ -147,7 +147,7 @@ export default function TableCsvUpload() {
   const structureCSVText = (csvText, fileName, format, sheetName = "") => {
     // const storedQuestionIDs = [];
     const header = csvText.data[0];
-    console.log(csvText);
+    console.log('csvText: ', csvText);
     let form_content = [];
     csvText.data.slice(1).forEach((q, index) => {
       let structured_q = {};
@@ -167,14 +167,12 @@ export default function TableCsvUpload() {
         formID: formId,
         form_header: header,
         form_content: form_content,
-        lastEditedBy: user.uid,
-        lastEditorEmail: user.email,
+        owner: user.uid,
         editedAt: serverTimestamp(),
         createdAt: serverTimestamp(),
         formFormat: format,
         fileName: fileName,
         sheetName: sheetName,
-        status: "unpublished",
       };
     } else {
       const newFormID = makeid(8);
@@ -182,16 +180,12 @@ export default function TableCsvUpload() {
         formID: newFormID,
         form_header: header,
         form_content: form_content,
-        creatorID: user.uid,
-        creatorEmail: user.email,
+        owner: user.uid,
         createdAt: serverTimestamp(),
-        lastEditedBy: user.uid,
-        lastEditorEmail: user.email,
         editedAt: serverTimestamp(),
         formFormat: format,
         fileName: fileName,
         sheetName: sheetName,
-        status: "unpublished",
       };
     }
 
@@ -259,8 +253,6 @@ export default function TableCsvUpload() {
   };
 
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const blockRef = useRef();
   const handleScroll = () => {
@@ -284,7 +276,7 @@ export default function TableCsvUpload() {
             }}
           >
             {formId
-              ? `Upload An Additional Data Sheet`
+              ? `Edit Existing Form`
               : `Upload A New Table Form `}
           </h3>
           {formId && (

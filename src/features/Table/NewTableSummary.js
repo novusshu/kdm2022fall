@@ -19,9 +19,9 @@ import {
 import { Button, Dropdown } from "react-bootstrap";
 import ReactTooltip from "react-tooltip";
 import { AiFillQuestionCircle, AiFillCloseCircle } from "react-icons/ai";
-import theme from "../Components/theme";
-import { Input, RadioGroup } from "../Components/Input";
-import Loading from "../Components/Loading";
+// import theme from "../Components/theme";
+import { Input } from "../../components/Input";
+import Loading from "../../components/Loading";
 
 const CustomMenu = React.forwardRef(
   ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
@@ -66,10 +66,7 @@ export const NewTableSummary = ({
   console.log("latestUnuploadedForm", latestUnuploadedForm);
   const formdb = "table_library";
   const [currentAllowedRoles, setCurrentAllowedRoles] = useState([]);
-  const roleOptionList = (({ "campus-lead": c, "hub-lead-admin": h }) => ({
-    "campus-lead": c,
-    "hub-lead-admin": h,
-  }))(allRoles);
+
   const validationSchema = Yup.object().shape({
     formTitle: Yup.string()
       .required("Cannot be empty!")
@@ -99,28 +96,6 @@ export const NewTableSummary = ({
           return valid;
         }
       ),
-    allowedInstitutions: Yup.array().test(
-      "Required",
-      "Please choose at least one institution to share the form with!",
-      (result) => {
-        console.log(result);
-        if (currentFormDomain == "Specific") {
-          if (!result || result.length <= 0) return false;
-        }
-        return true;
-      }
-    ),
-    allowedRoles: Yup.array().test(
-      "Required",
-      "At least one account type must be specified!",
-      (result) => {
-        // console.log(currentAllowedRoles)
-        if (!result || result.length <= 0) {
-          return false;
-        }
-        return true;
-      }
-    ),
   });
   const [formLibrary, setFormLibrary] = useState([]);
   const [currentEventKey, setCurrentEventKey] = useState(null);
@@ -173,24 +148,7 @@ export const NewTableSummary = ({
     }
     if (formData) setNumberOfQuestions(formData.form_content.length);
   }, [formData, formID]);
-  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <Button
-      variant={
-        errors["allowedInstitutions"] && currentAllowedInstitutions.length <= 0
-          ? "outline-danger"
-          : "outline-info"
-      }
-      href=""
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-      &#x25bc;
-    </Button>
-  ));
+
   const writeTemplateToFirebase = async (
     data,
     oldShardNum = 0,
@@ -339,7 +297,7 @@ export const NewTableSummary = ({
   return (
     <div>
       {/* <p>Form Title: {formTitle}</p> */}
-      <ReactTooltip backgroundColor={theme.highlightColor} />
+      {/* <ReactTooltip backgroundColor={theme.highlightColor} /> */}
 
       <div className="card m-3 border-light">
         <div className="card-body">
@@ -361,229 +319,6 @@ export const NewTableSummary = ({
                   className="mb-3 col-xl-6"
                 />
                 <p>Number of Rows: {numberOfQuestions}</p>
-                <Dropdown
-                  className=""
-                  onSelect={(eventKey, event) => {
-                    if (!currentAllowedRoles.includes(eventKey)) {
-                      setValue("allowedRoles", [
-                        ...currentAllowedRoles,
-                        eventKey,
-                      ]);
-                      setCurrentAllowedRoles([
-                        ...currentAllowedRoles,
-                        eventKey,
-                      ]);
-                    }
-                  }}
-                >
-                  <Dropdown.Toggle
-                    variant={
-                      errors["allowedRoles"] && currentAllowedRoles.length <= 0
-                        ? "outline-danger"
-                        : ""
-                    }
-                    className={
-                      errors["allowedRoles"] && currentAllowedRoles.length <= 0
-                        ? ""
-                        : "button-outline-theme"
-                    }
-                    id="dropdown-basic"
-                  >
-                    Specify role level:
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu>
-                    {Object.keys(roleOptionList).map((role) => {
-                      return (
-                        <Dropdown.Item eventKey={role}>
-                          {allRoles[role]}
-                        </Dropdown.Item>
-                      );
-                    })}
-                  </Dropdown.Menu>
-                  <AiFillQuestionCircle
-                    style={{
-                      marginLeft: "2px",
-                      marginBottom: "3px",
-                      color: theme.highlightColor,
-                      fontSize: "17px",
-                    }}
-                    data-tip={
-                      "Specify which account type can access this form."
-                    }
-                  />
-                </Dropdown>
-                <div className="my-2 col-md-6">
-                  {Object.keys(allRoles).map((role) => {
-                    if (currentAllowedRoles.includes(role)) {
-                      return (
-                        <Button className="mx-2" variant="secondary">
-                          {allRoles[role]}
-                          <AiFillCloseCircle
-                            style={{
-                              marginLeft: "5px",
-                              marginBottom: "3px",
-                              color: "white",
-                              fontSize: "17px",
-                            }}
-                            onClick={() => {
-                              let allowedRoles = currentAllowedRoles;
-                              var index = allowedRoles.indexOf(role);
-                              if (index !== -1) {
-                                allowedRoles.splice(index, 1);
-                                console.log(allowedRoles);
-                                setValue("allowedRoles", [...allowedRoles]);
-                                setCurrentAllowedRoles([...allowedRoles]);
-                              }
-                            }}
-                          />{" "}
-                        </Button>
-                      );
-                    }
-                    return <></>;
-                  })}
-
-                  <div className="is-invalid"></div>
-                  <div className="invalid-feedback mb-2">
-                    {errors["allowedRoles"] && currentAllowedRoles.length <= 0
-                      ? errors["allowedRoles"].message
-                      : ""}
-                  </div>
-                </div>
-                <Dropdown
-                  className="mb-3"
-                  onSelect={(eventKey, event) => {
-                    setValue("formDomain", eventKey);
-                    setCurrentFormDomain(eventKey);
-                  }}
-                >
-                  <Dropdown.Toggle
-                    className="button-outline-theme"
-                    id="dropdown-basic"
-                  >
-                    Form Domain{" "}
-                    {currentFormDomain ? `(${currentFormDomain}) ` : " "}
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu>
-                    <Dropdown.Item eventKey="Common">Common</Dropdown.Item>
-                    <Dropdown.Item eventKey="Specific">Specific</Dropdown.Item>
-                  </Dropdown.Menu>
-                  <AiFillQuestionCircle
-                    style={{
-                      marginLeft: "2px",
-                      marginBottom: "3px",
-                      color: theme.highlightColor,
-                      fontSize: "17px",
-                    }}
-                    data-tip={
-                      "Common: Available to all institutions.\nSpecific: available to one or more certain institutions."
-                    }
-                  />
-                </Dropdown>
-
-                {currentFormDomain == "Specific" && (
-                  <div>
-                    <Dropdown
-                      className="col-md-6  mx-2"
-                      onSelect={(eventKey, event) => {
-                        setCurrentAllowedInstitutions([
-                          ...currentAllowedInstitutions,
-                          eventKey,
-                        ]);
-                        setValue("allowedInstitutions", [
-                          ...currentAllowedInstitutions,
-                          eventKey,
-                        ]);
-                        setCurrentEventKey(eventKey);
-                      }}
-                    >
-                      <Dropdown.Toggle
-                        as={CustomToggle}
-                        id="dropdown-custom-components"
-                      >
-                        Add an Institution
-                      </Dropdown.Toggle>
-
-                      <Dropdown.Menu as={CustomMenu}>
-                        {institutionsList.map((institute) => {
-                          return (
-                            <Dropdown.Item
-                              eventKey={institute}
-                              active={institute == currentEventKey}
-                            >
-                              {institute}
-                            </Dropdown.Item>
-                          );
-                        })}
-                      </Dropdown.Menu>
-                    </Dropdown>
-                    <div className="is-invalid">
-                      {/* <div className="invalid-feedback">hello22</div> */}
-                    </div>
-                    <div className="invalid-feedback mb-2">
-                      {errors["institution"] && !currentEventKey
-                        ? errors["institution"].message
-                        : ""}
-                    </div>
-                    <div className="mb-2 col-md-6">
-                      {institutionsList.map((institution) => {
-                        const displayStyle =
-                          currentAllowedInstitutions.includes(institution)
-                            ? "block"
-                            : "none";
-
-                        return (
-                          <Button
-                            style={{ display: displayStyle }}
-                            className="mx-4"
-                            variant="secondary"
-                          >
-                            {institution}
-                            <AiFillCloseCircle
-                              style={{
-                                marginLeft: "5px",
-                                marginBottom: "3px",
-                                color: "white",
-                                fontSize: "17px",
-                              }}
-                              onClick={() => {
-                                let allowedInstitutions =
-                                  currentAllowedInstitutions;
-                                var index =
-                                  allowedInstitutions.indexOf(institution);
-                                if (index !== -1) {
-                                  allowedInstitutions.splice(index, 1);
-                                  console.log(allowedInstitutions);
-                                  setValue("allowedInstitutions", [
-                                    ...allowedInstitutions,
-                                  ]);
-                                  setCurrentAllowedInstitutions([
-                                    ...allowedInstitutions,
-                                  ]);
-                                }
-                              }}
-                            />{" "}
-                          </Button>
-                        );
-                      })}
-                      {/* <Button className="mx-1" variant='secondary'>Institution 1 <AiFillCloseCircle style={{
-                                        marginLeft: '2px', marginBottom: '3px',
-                                        color: 'white', fontSize: '17px'
-                                    }} /> </Button>
-                                    <Button className="mx-1" variant='secondary'>Institution 2 </Button> */}
-                      <div className="is-invalid">
-                        {/* <div className="invalid-feedback">hello22</div> */}
-                      </div>
-                      <div className="invalid-feedback mb-2">
-                        {errors["allowedInstitutions"] &&
-                        currentAllowedInstitutions.length <= 0
-                          ? errors["allowedInstitutions"].message
-                          : ""}
-                      </div>
-                    </div>
-                  </div>
-                )}
               </div>
 
               <div className="row d-flex justify-content-center my-3">
@@ -597,18 +332,6 @@ export const NewTableSummary = ({
                   >
                     Upload New Form
                   </button>
-                  {/* {formID ? (
-                    <Button
-                      className="mx-2"
-                      variant="outline-secondary"
-                      onClick={() => {
-                        setFormID(null);
-                        fileInputRef.current.value = "";
-                      }}
-                    >
-                      Cancel Revision{" "}
-                    </Button>
-                  ) : ( */}
                   <Button
                     className="mx-2"
                     variant="outline-secondary"
@@ -622,10 +345,10 @@ export const NewTableSummary = ({
                   {/* )} */}
                 </div>
               </div>
-              <small className="text-muted">
+              {/* <small className="text-muted">
                 By clicking the 'Upload' button, you confirm that you accept our
                 Terms of use and Privacy Policy.
-              </small>
+              </small> */}
             </form>
           </FormProvider>
         </div>
