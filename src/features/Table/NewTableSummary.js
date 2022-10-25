@@ -16,43 +16,13 @@ import {
   where,
   onSnapshot,
 } from "firebase/firestore";
-import { Button, Dropdown } from "react-bootstrap";
+import { Button, Card, Dropdown } from "react-bootstrap";
 import ReactTooltip from "react-tooltip";
 import { AiFillQuestionCircle, AiFillCloseCircle } from "react-icons/ai";
 // import theme from "../Components/theme";
 import { Input } from "../../components/Input";
 import Loading from "../../components/Loading";
-
-const CustomMenu = React.forwardRef(
-  ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
-    const [value, setValue] = useState("");
-
-    return (
-      <div
-        ref={ref}
-        style={style}
-        className={className}
-        aria-labelledby={labeledBy}
-      >
-        <Form.Control
-          autoFocus
-          className="mx-3 my-2 w-auto"
-          placeholder="Type to filter..."
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
-        />
-        <ul className="list-unstyled">
-          {React.Children.toArray(children).filter(
-            (child) =>
-              !value ||
-              child.props.children.toLowerCase().startsWith(value) ||
-              child.props.children.startsWith(value)
-          )}
-        </ul>
-      </div>
-    );
-  }
-);
+import { WriteToJSON } from "./WriteToJSON";
 
 export const NewTableSummary = ({
   latestUnuploadedForm,
@@ -65,8 +35,6 @@ export const NewTableSummary = ({
 }) => {
   console.log("latestUnuploadedForm", latestUnuploadedForm);
   const formdb = "table_library";
-  const [currentAllowedRoles, setCurrentAllowedRoles] = useState([]);
-
   const validationSchema = Yup.object().shape({
     formTitle: Yup.string()
       .required("Cannot be empty!")
@@ -153,7 +121,7 @@ export const NewTableSummary = ({
     data,
     oldShardNum = 0,
     merge = false,
-    limit = 300,
+    limit = 200,
     collectionName = "table_library"
   ) => {
     console.log("data from writeTemplateToFirebase: ", data);
@@ -205,7 +173,7 @@ export const NewTableSummary = ({
     data,
     oldShardNum = 0,
     merge = false,
-    limit = 300,
+    limit = 200,
     collectionName = "automatic_table_submissions"
   ) => {
     console.log("oldShardNum ", oldShardNum);
@@ -222,9 +190,8 @@ export const NewTableSummary = ({
           (i - oldShardNum) * limit,
           (i - oldShardNum) * limit + limit
         ),
-        lastEditedBy: data.lastEditedBy,
+        owner: data.owner,
         editedAt: data.editedAt,
-        lastEditorEmail: data.lastEditorEmail,
         createdAt: data.createdAt,
       };
       await setDoc(doc(db, collectionName, data.formID + "_" + i), tempData)
@@ -258,19 +225,11 @@ export const NewTableSummary = ({
   const handleUpload = async (data, e) => {
     e.preventDefault();
     const formTitle = data.formTitle;
-    const formDomain = data.formDomain ? data.formDomain : "Common";
-    const allowedInstitutions = data.allowedInstitutions
-      ? data.allowedInstitutions
-      : [];
-    const allowedRoles = data.allowedRoles ? data.allowedRoles : [];
 
     if (formData) {
       formData = {
         ...formData,
         formTitle,
-        formDomain,
-        allowedInstitutions,
-        allowedRoles,
       };
     } else {
       console.log("File was not selected");
@@ -295,11 +254,13 @@ export const NewTableSummary = ({
   };
 
   return (
-    <div>
+    <>
       {/* <p>Form Title: {formTitle}</p> */}
       {/* <ReactTooltip backgroundColor={theme.highlightColor} /> */}
 
-      <div className="card m-3 border-light">
+      {/* <div className="card m-5 border-light"> */}
+      <Card className="m-5">
+        <WriteToJSON /> 
         <div className="card-body">
           <h2>
             New Form Overview{" "}
@@ -323,15 +284,11 @@ export const NewTableSummary = ({
 
               <div className="row d-flex justify-content-center my-3">
                 <div className="form-group">
-                  <button
+                  <Button
                     type="submit"
-                    className={`btn ${
-                      // formID ? "btn-warning" :
-                      "button-fill-theme"
-                    } mr-1`}
                   >
-                    Upload New Form
-                  </button>
+                    Upload
+                  </Button>
                   <Button
                     className="mx-2"
                     variant="outline-secondary"
@@ -352,7 +309,7 @@ export const NewTableSummary = ({
             </form>
           </FormProvider>
         </div>
-      </div>
-    </div>
+        </Card>
+    </>
   );
 };

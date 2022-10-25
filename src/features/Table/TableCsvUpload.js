@@ -27,10 +27,10 @@ import { FileDrop } from "react-file-drop";
 // import theme from "../components/theme";
 import { NewTableSummary } from "./NewTableSummary";
 import { makeid, RoleValidationComponent } from "../../components/Utils";
-import { Table as BootstrapTable } from "react-bootstrap";
+import { Table as BootstrapTable, Card } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useUserAuth } from "../../context/UserAuthContext";
-
+import { WriteToJSON } from "./WriteToJSON";
 
 const UploadedList = ({
   latestUnuploadedForm,
@@ -61,7 +61,7 @@ const UploadedList = ({
     }, 200);
   };
   return (
-    <div className="card m-3 border-light" ref={wrapperRef}>
+    <div className="card m-5 border-light" ref={wrapperRef}>
       <div className="card-body">
         <h2>Uploaded File List</h2>
         <BootstrapTable>
@@ -118,10 +118,8 @@ export default function TableCsvUpload() {
   const [formID, setFormID] = useState(null);
   const [sheetID, setSheetID] = useState(0);
   const [summary, setSummary] = useState(false);
-  const [formUploadHistory, setFormUploadHistory] = useState([]);
   const { formId } = useParams();
 
-  // console.log("edit form: ", formId);
   // check formID is part of the list
 
   const { user } = useUserAuth();
@@ -190,7 +188,7 @@ export default function TableCsvUpload() {
     }
 
     return data_to_firebase;
-    // console.log(data_to_firebase)
+
   };
   const { readString } = usePapaParse();
   const onFileInputChange = async (e) => {
@@ -252,37 +250,31 @@ export default function TableCsvUpload() {
     };
   };
 
-  const [show, setShow] = useState(false);
-
   const blockRef = useRef();
   const handleScroll = () => {
     const block = blockRef.current;
-    console.log("block", block);
+    console.log("block", block.offsetTop );
     if (block) {
-      window.scrollTo(0, block.offsetTop || 0);
+      window.scrollTo(0, block.offsetTop * 0.8  || 0);
     }
   };
 
   /////
   return (
-    <div>
-      <div >
-        <div>
-          <h3
-            style={{
-              fontWeight: "bold",
-              textAlign: "center",
-              // color: theme.highlightColor,
-            }}
-          >
+    <>
+      <Card className="m-5 ">
+      <WriteToJSON /> 
+      <Card.Header as="h3" className="text-center">
             {formId
-              ? `Edit Existing Form`
-              : `Upload A New Table Form `}
-          </h3>
+              ? `Edit Existing Sheet`
+              : `Upload A New Funding Info Sheet `}
+          </Card.Header>
+        <Card.Body>
+          <Card.Text>
           {formId && (
             <h5 style={{ textAlign: "center" }}> Form ID: {formId}</h5>
           )}
-        </div>
+          </Card.Text>
         <input
           onChange={onFileInputChange}
           ref={fileInputRef}
@@ -310,7 +302,8 @@ export default function TableCsvUpload() {
           <b>Upload revised version</b> column of the <b>Your Uploaded Forms</b>{" "}
           table below
         </label> */}
-      </div>
+        </Card.Body>
+      </Card>
       {latestUnuploadedForm.length > 0 && (
         <UploadedList
           latestUnuploadedForm={latestUnuploadedForm}
@@ -340,6 +333,6 @@ export default function TableCsvUpload() {
           />
         </div>
       )}
-    </div>
+    </>
   );
 }
