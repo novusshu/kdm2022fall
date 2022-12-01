@@ -26,7 +26,7 @@ export const PublicHeader = () => {
                 alt="BBIN logo"
               />
               {"   "}
-              BBIN
+              BIIN
             </Navbar.Brand> 
             <>
                 <Nav.Link href="/#about" className="scrollto">
@@ -81,7 +81,7 @@ export const PrivateHeader = () => {
                 alt="BBIN logo"
               />
               {"   "}
-              BBIN
+              BIIN
             </Navbar.Brand>      
                  <Nav.Link href="/tablecsvupload" className="scrollto">
                 NSF Funding List

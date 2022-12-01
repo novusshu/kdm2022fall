@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { db } from "../features/firebasedb";
+import { db } from "../firebasedb";
 import {
   doc,
   setDoc,

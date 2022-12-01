@@ -10,8 +10,8 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
-import { db } from "../features/firebasedb";
-import { auth } from "../features/firebasedb";
+import { db } from "../firebasedb";
+import { auth } from "../firebasedb";
 
 const userAuthContext = createContext();
 

@@ -9,8 +9,8 @@ export const LandingPage = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
-              <h1>Better Solutions For Your Business</h1>
-              <h2>We are team of talented designers making websites with Bootstrap</h2>
+              <h1>Bridging Brilliant Ideas for Innovation</h1>
+              <h2>Best assistant in your journey of grant application</h2>
               <div className="d-flex justify-content-center justify-content-lg-start">
                 <a href="/#" className="btn-get-started scrollto">Get Started</a>
                 <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" className="glightbox btn-watch-video"><i className="bi bi-play-circle"></i><span>Watch Video</span></a>
@@ -578,7 +578,7 @@ export const LandingPage = () => {
             <div className="faq-list">
               <ul>
                 <li data-aos="fade-up" data-aos-delay="100">
-                  <i className="bx bx-help-circle icon-help"></i> 
+                  <i className="bx bx-help-circle icon-help"></i>
                   <a href="/#" data-bs-toggle="collapse" className="collapse" data-bs-target="#faq-list-1">Non consectetur a erat nam at lectus urna duis? <i className="bx bx-chevron-down icon-show"></i><i className="bx bx-chevron-up icon-close"></i></a>
                   <div id="faq-list-1" className="collapse show" data-bs-parent=".faq-list">
                     <p>
@@ -667,7 +667,7 @@ export const LandingPage = () => {
               </div>
 
               <div className="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-                <form  method="post" className="php-email-form">
+                <form method="post" className="php-email-form">
                   <div className="row">
                     <div className="form-group col-md-6">
                       <label htmlFor="name">Your Name</label>
@@ -704,7 +704,76 @@ export const LandingPage = () => {
       </main>
       {/* // <!-- End #main --> */}
 
-      
+      <footer id="footer">
+
+        <div className="footer-newsletter">
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-lg-6">
+                {/* <h4>Join Our Newsletter</h4>
+        <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+        <form action="" method="post">
+          <input type="email" name="email" />
+          <input type="submit" value="Subscribe" />
+        </form> */}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="footer-top">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 col-md-6 footer-contact">
+                <h3>BIIN</h3>
+                <p>
+                  A108 Adam Street
+                  New York, NY 535022
+                  United States
+                  <strong>Phone:</strong> +1 5589 55488 55
+                  <strong>Email:</strong> info@example.com
+                </p>
+              </div>
+
+              <div className="col-lg-3 col-md-6 footer-links">
+                <h4>Useful Links</h4>
+                <ul>
+                  <li><i className="bx bx-chevron-right"></i> <a href="/#">Home</a></li>
+                  <li><i className="bx bx-chevron-right"></i> <a href="/#">About us</a></li>
+                  <li><i className="bx bx-chevron-right"></i> <a href="/#">Services</a></li>
+                  <li><i className="bx bx-chevron-right"></i> <a href="/#">Terms of service</a></li>
+                  <li><i className="bx bx-chevron-right"></i> <a href="/#">Privacy policy</a></li>
+                </ul>
+              </div>
+
+              <div className="col-lg-3 col-md-6 footer-links">
+                <h4>Our Services</h4>
+                <ul>
+                  <li><i className="bx bx-chevron-right"></i> <a href="/#">Web Design</a></li>
+                  <li><i className="bx bx-chevron-right"></i> <a href="/#">Web Development</a></li>
+                  <li><i className="bx bx-chevron-right"></i> <a href="/#">Product Management</a></li>
+                  <li><i className="bx bx-chevron-right"></i> <a href="/#">Marketing</a></li>
+                  <li><i className="bx bx-chevron-right"></i> <a href="/#">Graphic Design</a></li>
+                </ul>
+              </div>
+
+              <div className="col-lg-3 col-md-6 footer-links">
+                <h4>Our Social Networks</h4>
+                <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+                <div className="social-links mt-3">
+                  <a href="/#" className="twitter"><i className="bx bxl-twitter"></i></a>
+                  <a href="/#" className="facebook"><i className="bx bxl-facebook"></i></a>
+                  <a href="/#" className="instagram"><i className="bx bxl-instagram"></i></a>
+                  <a href="/#" className="google-plus"><i className="bx bxl-skype"></i></a>
+                  <a href="/#" className="linkedin"><i className="bx bxl-linkedin"></i></a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </footer>
+
 
     </>
   )

@@ -10,7 +10,7 @@ export const LayoutPublic = () => {
 
     useEffect(() => {
       if(user) {
-        navigate("/dashboard")
+        navigate("/user")
       } 
     }, [user, navigate])
 
@@ -41,9 +41,9 @@ export const LayoutPrivate = () => {
     <>
      { user !== undefined && 
       <>
-   <PrivateHeader /> 
+   {/* <PrivateHeader />  */}
    <Outlet />
-    <Footer />
+    {/* <Footer /> */}
     </>
    }
      </>

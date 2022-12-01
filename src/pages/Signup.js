@@ -8,7 +8,7 @@ import {
 } from "firebase/firestore";
 import { useNavigate} from "react-router-dom";
 import { Input } from "../components/Input";
-import { db } from "../features/firebasedb";
+import { db } from "../firebasedb";
 import { useUserAuth } from "../context/UserAuthContext";
 
 const validationSchema = Yup.object().shape({

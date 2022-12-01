@@ -13,10 +13,12 @@ import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 // import TableFormRendering from "./features/Table/TableFormRendering";
 // import CreateGrid from "./features/Table/CreateGrid";
-import TableCsvUpload from "./features/Table/TableCsvUpload";
+// import TableCsvUpload from "./features/Table/TableCsvUpload";
 import {LayoutPublic, LayoutPrivate} from "./layouts/Layouts"
 import Dashboard from "./pages/Dashboard";
 import { LandingPage } from "./pages/LandingPage";
+// import MyCalendar from "./features/Calendar/Calender";
+import DefaultLayout from "./console/DefaultLayout";
 
 function App() {
   useEffect(() => {
@@ -43,11 +45,17 @@ function App() {
               <Route path="/forgotpassword" element={<ForgotPassword />} />
           </Route>
           <Route element={<LayoutPrivate />}>
-              <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/user/*" element={<DefaultLayout />} />
+              {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+              {/* <Route path="/calendar" element={<MyCalendar />} /> */}
               {/* <Route path="/edit-profile" element={<EditProfilePage />} /> */}
               {/* <Route path="*" element={<NotFound />} /> */}
-              <Route path="/tablecsvupload" element={<TableCsvUpload />} />
+              {/* <Route path="/tablecsvupload" element={<TableCsvUpload />} /> */}
           </Route>
+
+          
+
+
 
         </Routes>
       </UserAuthContextProvider>
