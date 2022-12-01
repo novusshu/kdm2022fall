@@ -44,7 +44,7 @@ const Signup = () => {
       console.log("User successfully created and signed in!");
         console.log(userCredential);
       data.userID = userCredential.user.uid;
-      navigate("/dashboard");
+      navigate("/user");
       await writeToFirebase(data);
     } catch (err) {
       console.log(err.message);

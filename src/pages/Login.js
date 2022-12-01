@@ -12,7 +12,7 @@ const LoginForm = ( ) => {
   const loginSubmit = async (data) => {
     try {
       await logIn(data.email, data.password);
-      navigate("/dashboard");
+      navigate("/user");
     } catch (err) {
         // const errorCode = error.code;
         const errorMessage = err.message;

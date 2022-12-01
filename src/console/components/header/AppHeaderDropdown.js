@@ -30,8 +30,9 @@ import { useUserAuth } from '../../../context/UserAuthContext'
 const AppHeaderDropdown = () => {
   const { logOut, userData } = useUserAuth();
   const navigate = useNavigate();
-
+  
   const handleLogout = async () => {
+    console.log("Signing out!");
     try {
       await logOut();
       console.log("Signed out successfully!");
@@ -100,8 +101,8 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem> */}
         <CDropdownDivider />
-        <CDropdownItem href="#">
-          <CIcon icon={cilLockLocked} className="me-2" onClick={handleLogout}/>
+        <CDropdownItem onClick={handleLogout}>
+          <CIcon icon={cilLockLocked} className="me-2" />
           Log Out
         </CDropdownItem>
       </CDropdownMenu>
