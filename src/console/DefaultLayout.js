@@ -16,7 +16,7 @@ const DefaultLayout = () => {
           <AppContent />
         </div>
 
-        <Footer />
+        {/* <AppFooter /> */}
       </div>
     </div>
     </Provider>

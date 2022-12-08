@@ -1,10 +1,11 @@
+import '../assets/css/style.css'
 
 export const Footer = () => {
   return (
     <footer>
       <div className="container footer-bottom clearfix mt-3">
         <div className="copyright">
-          &copy; Copyright <strong><span>Arsha</span></strong>. All Rights Reserved
+          &copy; Copyright <strong><span>BIIN</span></strong>. All Rights Reserved
         </div>
         <div className="credits">
           {/* <!-- All the links in the footer should remain intact. -->

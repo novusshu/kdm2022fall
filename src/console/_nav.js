@@ -28,7 +28,23 @@ const _nav = [
   },
   {
     component: CNavTitle,
-    name: 'Theme',
+    name: 'My Uploads',
+  },
+  {
+    component: CNavItem,
+    name: 'Upload Table',
+    to: '/user/tablecsvupload',
+    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'View Uploads',
+    to: '/user/uploadedfiles',
+    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavTitle,
+    name: 'My Calendar',
   },
   {
     component: CNavItem,
@@ -37,15 +53,20 @@ const _nav = [
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
   },
   {
-    component: CNavItem,
-    name: 'Table Upload',
-    to: '/user/tablecsvupload',
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    component: CNavTitle,
+    name: 'Grants',
   },
+
   {
     component: CNavItem,
     name: 'NSF Funding List',
     to: '/nsf',
+    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Question Answering',
+    to: '/user/qa',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
   // {

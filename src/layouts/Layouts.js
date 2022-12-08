@@ -10,7 +10,7 @@ export const LayoutPublic = () => {
 
     useEffect(() => {
       if(user) {
-        navigate("/user")
+        navigate("/user/dashboard")
       } 
     }, [user, navigate])
 

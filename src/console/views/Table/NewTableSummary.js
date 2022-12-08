@@ -66,7 +66,6 @@ export const NewTableSummary = ({
       ),
   });
   const [formLibrary, setFormLibrary] = useState([]);
-  const [currentEventKey, setCurrentEventKey] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   let formData;
 
@@ -190,7 +189,7 @@ export const NewTableSummary = ({
           (i - oldShardNum) * limit,
           (i - oldShardNum) * limit + limit
         ),
-        owner: data.owner,
+        userID: data.userID,
         editedAt: data.editedAt,
         createdAt: data.createdAt,
       };

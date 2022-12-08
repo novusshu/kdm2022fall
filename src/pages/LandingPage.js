@@ -1,4 +1,5 @@
 import heroImg from "../assets/img/hero-img.png"
+import '../assets/css/style.css'
 
 export const LandingPage = () => {
   return (

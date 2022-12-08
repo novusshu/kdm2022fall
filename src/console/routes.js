@@ -2,8 +2,9 @@ import React from 'react'
 
 const Dashboard = React.lazy(() => import('./views/Dashboard'))
 const TableCsvUpload = React.lazy(() => import('./views/Table/TableCsvUpload'))
-const Calendar = React.lazy(() => import('./views/Calendar/Calender'))
-// const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
+const Calendar = React.lazy(() => import('./views/Calendar/MyCal'))
+const UploadedFiles = React.lazy(() => import('./views/Table/UploadedFiles'))
+const QuestionAnswer = React.lazy(() => import('./views/QnA/QuestionAnswer'))
 // const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
 // // Base
@@ -57,6 +58,8 @@ const routes = [
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/tablecsvupload', name: 'Upload Table', element: TableCsvUpload },
   { path: '/calendar', name: 'Calendar', element: Calendar },
+  { path: '/uploadedfiles', name: 'Uploaded Files', element: UploadedFiles },
+  { path: '/qa', name: 'Q & A', element: QuestionAnswer },
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },
   // { path: '/theme/colors', name: 'Colors', element: Colors },
   // { path: '/theme/typography', name: 'Typography', element: Typography },
