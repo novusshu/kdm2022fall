@@ -17,6 +17,8 @@ import {
 } from "firebase/firestore";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Card from 'react-bootstrap/Card';
+
 
 
 export default function QuestionAnswer({
@@ -49,34 +51,51 @@ export default function QuestionAnswer({
         console.log(data);
         // alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
         // writeToFirebase(data);
-        query({inputs:{question: data.search,
-        context: context}}).
-        then((response) => {
-            setAnswer(response)
-            console.log(JSON.stringify(response));
-        })
-        .catch((err) => {
-            console.log(err.message);
-         });
+        query({
+            inputs: {
+                question: data.search,
+                context: context
+            }
+        }).
+            then((response) => {
+                setAnswer(response)
+                console.log(JSON.stringify(response));
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
     }
     return (
         <>
-        <form className="d-flex" onSubmit={handleSubmit(onSubmit)}>
-            <Form.Control
-                type="search"
-                placeholder="Ask a Question"
-                className="me-2"
-                aria-label="Search"
-                {...register("search", { required: true })}
-            />
-            <Button type='submit' variant="outline-success">Search Answers</Button>
-            <div className="invalid-feedback">
-            {errors?.search?.message}
-            </div>
-           
-        </form>
+            <form className="d-flex" onSubmit={handleSubmit(onSubmit)}>
+                <Form.Control
+                    type="search"
+                    placeholder="Ask a Question"
+                    className="me-2"
+                    aria-label="Search"
+                    {...register("search", { required: true })}
+                />
+                <Button type='submit' variant="outline-success">Search Answers</Button>
+                <div className="invalid-feedback">
+                    {errors?.search?.message}
+                </div>
 
-        {answer && <div> {answer.answer} </div>}
+            </form>
+
+            {answer &&
+
+                <Card className="text-center mt-5" >
+                    <Card.Header>Answer</Card.Header>
+                    <Card.Body>
+                        <Card.Title></Card.Title>
+                        <Card.Text>
+                            {answer.answer}
+                        </Card.Text>
+                    </Card.Body>
+                    {/* <Card.Footer className="text-muted">2 days ago</Card.Footer> */}
+                </Card>
+
+            }
 
         </>
     )

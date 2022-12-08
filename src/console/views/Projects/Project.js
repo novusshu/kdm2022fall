@@ -15,6 +15,7 @@ import {
     serverTimestamp,
 } from "firebase/firestore";
 import QuestionAnswer from "../QnA/QuestionAnswer";
+import Card from 'react-bootstrap/Card';
 
 import { useUserAuth } from "../../../context/UserAuthContext";
 
@@ -43,14 +44,20 @@ export default function Project() {
 
     return (
         <>
-       
-        <div>
-            <QuestionAnswer context={project.Synopsis} />
-        
-        <div>
-             {project && project.Title}
-            </div>
-            </div>
+       {project && 
+       <Card >
+       <Card.Header>{project.Title}</Card.Header>
+       <Card.Body>
+           <Card.Title className="m-5" >
+           <QuestionAnswer context={project.Synopsis} />
+           </Card.Title>
+           <Card.Text >
+            {project.Synopsis}
+           </Card.Text>
+       </Card.Body>
+       {/* <Card.Footer className="text-muted">2 days ago</Card.Footer> */}
+   </Card>
+      }
         </>
     )
 }
