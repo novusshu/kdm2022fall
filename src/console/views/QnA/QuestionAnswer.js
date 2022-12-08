@@ -19,7 +19,9 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 
-export default function QuestionAnswer() {
+export default function QuestionAnswer({
+    context
+}) {
 
     const API_TOKEN = process.env.REACT_APP_HF_API_TOKEN
     const [answer, setAnswer] = useState(null)
@@ -48,7 +50,7 @@ export default function QuestionAnswer() {
         // alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
         // writeToFirebase(data);
         query({inputs:{question: data.search,
-        context:"My name is Clara and I live in Berkeley."}}).
+        context: context}}).
         then((response) => {
             setAnswer(response)
             console.log(JSON.stringify(response));

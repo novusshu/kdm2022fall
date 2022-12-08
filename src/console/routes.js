@@ -61,7 +61,7 @@ const routes = [
   { path: '/tablecsvupload', name: 'Upload Table', element: TableCsvUpload },
   { path: '/calendar', name: 'Calendar', element: Calendar },
   { path: '/uploadedfiles', name: 'Uploaded Files', element: UploadedFiles },
-  { path: '/qa', name: 'Q & A', element: QuestionAnswer },
+  // { path: '/qa', name: 'Q & A', element: QuestionAnswer },
   { path: '/projectlist', name: 'Project List', element: ProjectList },
   { path: '/projects/:projectID', name: 'Projects', element: Project },
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },

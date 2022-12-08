@@ -45,11 +45,10 @@ export default function Project() {
         <>
        
         <div>
-            <QuestionAnswer />
+            <QuestionAnswer context={project.Synopsis} />
         
         <div>
-             {project && project.Synopsis}
-
+             {project && project.Title}
             </div>
             </div>
         </>
