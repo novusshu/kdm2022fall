@@ -5,6 +5,8 @@ const TableCsvUpload = React.lazy(() => import('./views/Table/TableCsvUpload'))
 const Calendar = React.lazy(() => import('./views/Calendar/MyCal'))
 const UploadedFiles = React.lazy(() => import('./views/Table/UploadedFiles'))
 const QuestionAnswer = React.lazy(() => import('./views/QnA/QuestionAnswer'))
+const ProjectList = React.lazy(() => import('./views/Projects/ProjectList'))
+const Project = React.lazy(() => import('./views/Projects/Project'))
 // const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
 // // Base
@@ -60,6 +62,8 @@ const routes = [
   { path: '/calendar', name: 'Calendar', element: Calendar },
   { path: '/uploadedfiles', name: 'Uploaded Files', element: UploadedFiles },
   { path: '/qa', name: 'Q & A', element: QuestionAnswer },
+  { path: '/projectlist', name: 'Project List', element: ProjectList },
+  { path: '/projects/:projectID', name: 'Projects', element: Project },
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },
   // { path: '/theme/colors', name: 'Colors', element: Colors },
   // { path: '/theme/typography', name: 'Typography', element: Typography },

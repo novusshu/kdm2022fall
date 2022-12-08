@@ -60,7 +60,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'NSF Funding List',
-    to: '/nsf',
+    to: '/user/projectlist',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
   {
