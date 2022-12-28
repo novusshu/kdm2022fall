@@ -32,14 +32,14 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Upload Table',
-    to: '/user/tablecsvupload',
+    name: 'Import a List',
+    to: '/user/import',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'View Uploads',
-    to: '/user/uploadedfiles',
+    name: 'View Imports',
+    to: '/user/filelist',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
   {

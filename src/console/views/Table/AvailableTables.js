@@ -72,93 +72,75 @@ const Styles = styled.div`
 export default function AvailableTables({
   userID,
   userData,
-  setFormMetadata
 }) {
   const [formUploadHistory, setFormUploadHistory] = useState([]);
-  const [allFormMetadata, setAllFormMetadata] = useState([]);
-  const [allData, setAllData] = useState([])
 
-    //Form Upload History Retrieva  l
+  //Form Upload History Retrieva  l
   useEffect(() => {
-    const formUploadRef = collection(db, "table_library");
+    const formUploadRef = collection(db, "uploads_index");
     const q = query(formUploadRef, where("userID", "==", userID),)
     // orderBy("createdAt", "desc"))
-    let formMetadata = [];
     const unsubscribe = onSnapshot(q, querySnapshot => {
-        let formUploadHistData = [];
-        querySnapshot.forEach(docSnapShot => {
-          
-          // console.log('formData')
-          formMetadata.push(docSnapShot.data());
-          // doc.data() is never undefined for query doc snapshots
-          const rawData = docSnapShot.data();
-          allFormMetadata[rawData.formID] = rawData;
-          const createdDate = rawData.createdAt.toDate().toDateString();
-          const createdTime = rawData.createdAt
-            .toDate()
-            .toLocaleTimeString("en-US");
-          const editedDate = rawData.editedAt.toDate().toDateString();
-          const editedTime = rawData.editedAt
-            .toDate()
-            .toLocaleTimeString("en-US");
-          const formFormat = rawData.formFormat ? rawData.formFormat : "csv";
-          const formName = rawData.formTitle
-            ? rawData.formTitle
-            : "Untitled Form";
+      let formUploadHistData = [];
+      querySnapshot.forEach(docSnapShot => {
+        // doc.data() is never undefined for query doc snapshots
+        const rawData = docSnapShot.data();
+        const createdDate = rawData.createdAt.toDate().toDateString();
+        const createdTime = rawData.createdAt
+          .toDate()
+          .toLocaleTimeString("en-US");
+        const editedDate = rawData.editedAt.toDate().toDateString();
+        const editedTime = rawData.editedAt
+          .toDate()
+          .toLocaleTimeString("en-US");
 
-          // console.log('here')
-          formUploadHistData.push({
-            formID: rawData.formID,
-            formTitle: formName,
-            createdAt: `${createdDate}, ${createdTime}`,
-            timeStamp: rawData.createdAt,
-            formFormat: formFormat,
-            editedAt: `${editedDate}, ${editedTime}`,
-          });
+        // console.log('here')
+        formUploadHistData.push({
+          ...rawData,
+          createdAt: `${createdDate}, ${createdTime}`,
+          timeStamp: rawData.createdAt,
+          editedAt: `${editedDate}, ${editedTime}`,
         });
-        if (setFormMetadata) setFormMetadata(formMetadata);
-        setAllFormMetadata(formMetadata);
-        console.log('formUploadHistData before sort', formUploadHistData)
-        formUploadHistData.sort(function (x, y) {
-          // console.log(y.currentPrerequisites.length, x.currentPrerequisites.length)
-          // return x.currentPrerequisites.length - y.currentPrerequisites.length; //sort y before x
-          return x.createdAt
-        });
-        // console.log('formUploadHistData after sort', formUploadHistData)
-
-        //Check Previous Form Submission Status
-        const formUploadRef = collection(db, "automatic_table_submissions");
       });
-    return [unsubscribe];
+      console.log('formUploadHistData before sort', formUploadHistData)
+      formUploadHistData.sort(function (x, y) {
+        // console.log(y.currentPrerequisites.length, x.currentPrerequisites.length)
+        // return x.currentPrerequisites.length - y.currentPrerequisites.length; //sort y before x
+        return x.createdAt
+      });
+      setFormUploadHistory(formUploadHistData)
+      // console.log('formUploadHistData after sort', formUploadHistData)
+
+    });
   }, [userID]);
 
-  useEffect(() => {
-    let allSubmittedTables = []
+  // useEffect(() => {
+  //   let allSubmittedTables = []
 
-    onSnapshot(collection(db, "automatic_table_submissions",
-      where("userID", "==", userID)), 
-      qSnapShot => {
-        qSnapShot.forEach(docSnapShot => {
-          const raw = docSnapShot.data();
-          allSubmittedTables.push(raw);
-        })
-        // console.log('allSubmittedTables: ', allSubmittedTables)
-        setAllData(allSubmittedTables)
-      })
-  }, [userID])
+  //   onSnapshot(collection(db, "uploads_content",
+  //     where("userID", "==", userID)), 
+  //     qSnapShot => {
+  //       qSnapShot.forEach(docSnapShot => {
+  //         const raw = docSnapShot.data();
+  //         allSubmittedTables.push(raw);
+  //       })
+  //       // console.log('allSubmittedTables: ', allSubmittedTables)
+  //       setAllData(allSubmittedTables)
+  //     })
+  // }, [userID])
 
   let columns = React.useMemo(
     () => [
       {
-        Header: `Uploaded Forms`,
+        Header: `Uploaded Files`,
         columns: [
           {
-            Header: "Form ID",
+            Header: "File ID",
             accessor: "formID",
             width: 100
           },
           {
-            Header: "Form Name",
+            Header: "File Name",
             accessor: "formTitle"
           },
           {
@@ -166,29 +148,20 @@ export default function AvailableTables({
             accessor: "createdAt"
           },
           {
-            Header: "File Format",
-            accessor: "formFormat"
+            Header: "Edited",
+            accessor: "editedAt"
           },
           {
-            Header: "Status",
-            accessor: "status"
-            // width: 200,
+            Header: 'Short Notes',
+            accessor: 'notes'
+          },
+          {
+            Header: 'Action',
+            accessor: 'action'
           }
-          // {
-          //   Header: 'Available To',
-          //   accessor: 'accessibleTo',
-          // }
         ]
-      }
-      // {
-      //   Header: 'Action',
-      //   columns: [
-      //     {
-      //       Header: '',
-      //       accessor: 'action'
-      //     }
-      //   ]
-      // }
+      },
+     
     ],
     []
   );
@@ -206,9 +179,7 @@ export default function AvailableTables({
         <Table
           columns={columns}
           data={formUploadHistory}
-          allFormMetadata={allFormMetadata}
           userData={userData}
-          allData={allData}
         />
       </Styles>
 

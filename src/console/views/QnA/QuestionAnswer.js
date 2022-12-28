@@ -100,3 +100,23 @@ export default function QuestionAnswer({
         </>
     )
 }
+
+
+// // Get the page HTML
+// fetch('https://www.nsf.gov/publications/pub_summ.jsp?ods_key=pappg&WT.z_pims_id=505698')
+//   .then(response => response.text())
+//   .then(html => {
+//     // Create a new HTML document
+//     const doc = new DOMParser().parseFromString(html, 'text/html');
+
+//     // Get all the anchor elements on the page
+//     const anchors = doc.querySelectorAll('a');
+
+//     // Loop through the anchor elements and print their href attributes
+//     // if they contain the text "PAPPG 23-1"
+//     anchors.forEach(anchor => {
+//       if (anchor.textContent.includes('PAPPG 23-1')) {
+//         console.log(anchor.getAttribute('href'));
+//       }
+//     });
+//   });

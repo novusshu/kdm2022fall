@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { db } from "../Firebase/firebasedb";
 import {
   doc,
   setDoc,
@@ -13,26 +12,37 @@ import {
   getDoc,
   deleteDoc
 } from "firebase/firestore";
-// import { Button } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-// import { AutomaticTable } from "./AutomaticComponents";
-import CreateGrid from "../Table/CreateGrid";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 import { Modal, Button } from "react-bootstrap";
-import "./automatic_form.css";
-import { isCampusLead, isHubLead } from "../Fixed Sources/accountTypes";
-import Loading from "../Loading";
+// import { Button } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+// import { AutomaticTable } from "./AutomaticComponents";
+import { db } from "../../../firebasedb";
+import CreateGrid from "./CreateGrid"
+// import "./automatic_form.css";
+import Loading from "../../../components/Loading";
+import { useUserAuth } from "../../../context/UserAuthContext";
 
 export default function TableFormRendering() {
-  const [renderPage, setRenderPage] = useState(true);
-  const highlightColor = "#6E48AA";
   const { formId } = useParams();
+  const { user, userData } = useUserAuth();
+
   const [formContent, setFormContent] = useState([]);
   const [formMetadata, setFormMetadata] = useState(null);
   const [submissionData, setSubmissionData] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const [refresh, setRefresh] = useState(1)
+
+  const [submitSuccessfully, setSubmitSuccessfully] = useState(null);
+
+  const [showLatestFormConsent, setShowLatestFormConsent] = useState(false);
+  const [formRetrieveConsent, setFormRetrieveConsent] = useState(null);
+  const [show, setShow] = useState(false);
+  const [latestRetrievedForm, setLatestRetrievedForm] = useState(null);
+
+  const [formRetrieved, setFormRetrieved] = useState(null);
+
 
   const onSubmit = data => {
     // console.log(data);
@@ -47,14 +57,7 @@ export default function TableFormRendering() {
     console.log("submissionData: ", submissionData);
   }, [submissionData]);
 
-  const [submitSuccessfully, setSubmitSuccessfully] = useState(null);
-  useEffect(() => {
-    if (submitSuccessfully) {
-      // setShow(true);
-    }
-  }, [submitSuccessfully]);
-  const [showLatestFormConsent, setShowLatestFormConsent] = useState(false);
-  const [formRetrieveConsent, setFormRetrieveConsent] = useState(null);
+
   const handleNoLatestForm = () => {
     setShowLatestFormConsent(false);
     setFormRetrieveConsent(false);
@@ -64,7 +67,7 @@ export default function TableFormRendering() {
     setFormRetrieveConsent(true);
   };
 
-  const [show, setShow] = useState(false);
+
 
   const handleClose = () => {
     setShow(false);
@@ -78,8 +81,8 @@ export default function TableFormRendering() {
     data,
     currentTime,
     merge = true,
-    limit = 300,
-    collectionName = "table_library"
+    limit = 200,
+    collectionName = "uploads_index"
   ) => {
     console.log("data from writeTemplateToFirebase: ", data);
     const shardNum = Math.ceil(data.length / limit);
@@ -126,12 +129,12 @@ export default function TableFormRendering() {
   const writeAllToFirebase = async (
     data,
     currentTime,
-    collectionName = "automatic_table_submissions",
-    limit = 300
+    collectionName = "uploads_content",
+    limit = 200
   ) => {
     console.log(data);
     setIsLoading(true);
-    let docSnapshot = await getDoc(doc(db, "table_library", formId));
+    let docSnapshot = await getDoc(doc(db, "uploads_index", formId));
     const currentShardNum = docSnapshot.data().shardNum;
     // const creatorId = docSnapshot.data().creatorID
     console.log("currentShardNum: ", currentShardNum);
@@ -156,7 +159,7 @@ export default function TableFormRendering() {
               for (let j = shardNum; j < currentShardNum; j++) {
                 console.log("j: ", j);
                 deleteDoc(
-                  doc(db, "automatic_table_submissions", formId + "_" + j)
+                  doc(db, "uploads_content", formId + "_" + j)
                 );
               }
             }
@@ -185,68 +188,12 @@ export default function TableFormRendering() {
     return;
   };
 
-  const [latestRetrievedForm, setLatestRetrievedForm] = useState(null);
-
-  const [formRetrieved, setFormRetrieved] = useState(null);
-
-  //Authentication Parameters
-  const [userData, setUserData] = useState(null);
-
-  const auth = getAuth();
-  const [user, setUser] = useState(null);
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        // const uid = user.uid;
-        // ...
-        setUser(user);
-      } else {
-      }
-    });
-    return () => unsubscribe();
-  }, [auth]);
-  useEffect(() => {
-    if (user) {
-      const docRef = doc(db, "Users", user.uid);
-      getDoc(docRef).then(docSnap => {
-        if (docSnap.exists()) {
-          console.log("Document data:", docSnap.data());
-          const data = docSnap.data();
-          setUserData(data);
-          console.log(data.atype);
-        }
-      });
-    }
-  }, [user]);
-
-  const thisform = useRef();
-
-  useEffect(() => {
-    const docRef = doc(db, "table_library", formId);
+    const docRef = doc(db, "uploads_index", formId);
     onSnapshot(docRef, doc => {
       // console.log("Current data: ", doc.data());
       if (doc.exists()) {
         const data = doc.data();
-        const formDomain = data.formDomain ? data.formDomain : "Common";
-        const allowedRoles = data.allowedRoles ? data.allowedRoles : [];
-        const allowedInstitutions = data.allowedInstitutions
-          ? data.allowedInstitutions
-          : [];
-        let renderPage = false;
-        if (formDomain === "Specific") {
-          if (userData) {
-            if (allowedInstitutions.includes(userData.institution)) {
-              if (allowedRoles.includes(userData.atype)) {
-                renderPage = true;
-              }
-            }
-          }
-        } else {
-          renderPage = true;
-        }
-        setRenderPage(renderPage);
         // console.log("Document data:", data);
         setFormContent(
           (({ form_header, form_content }) => ({
@@ -267,7 +214,7 @@ export default function TableFormRendering() {
     });
     // getDoc(docRef).then((docSnap) => {});
     if (user) {
-      const formUploadRef = collection(db, "automatic_table_submissions");
+      const formUploadRef = collection(db, "uploads_content");
       const q = query(
         formUploadRef,
         // where("userID", "==", user.uid),
@@ -331,185 +278,82 @@ export default function TableFormRendering() {
     }
   }, [showLatestFormConsent, submitSuccessfully]);
 
-  function validatePermission(userData) {
-    let passed = false;
-    if (formMetadata.status == "published") {
-      if (
-        formMetadata.allowedRoles &&
-        formMetadata.allowedRoles.includes(userData.atype)
-      ) {
-        if (formMetadata.formDomain == "Common") {
-          passed = true;
-        } else if (formMetadata.formDomain == "Specific") {
-          console.log(
-            "formMetadata.allowedInstitutions",
-            formMetadata.allowedInstitutions
-          );
-          if (formMetadata.allowedInstitutions && userData.institution) {
-            formMetadata.allowedInstitutions.forEach(institution => {
-              if (institution.includes(userData.institution)) {
-                passed = true;
-              }
-            });
-          }
-        }
-      } else if (isHubLead(userData.atype) || isCampusLead(userData.atype)) {
-        if (formMetadata.formDomain == "Common") {
-          passed = true;
-        } else if (formMetadata.formDomain == "Specific") {
-          console.log(
-            "formMetadata.allowedInstitutions",
-            formMetadata.allowedInstitutions
-          );
-
-          if (formMetadata.allowedInstitutions && userData.institution) {
-            if (formMetadata.allowedInstitutions && userData.institution) {
-              formMetadata.allowedInstitutions.forEach(institution => {
-                if (institution.includes(userData.institution)) {
-                  passed = true;
-                }
-              });
-            }
-          }
-        }
-      }
-      // console.log('condition 1', passed)
-    } else if (
-      formMetadata.status == "awaiting-approval" ||
-      formMetadata.status == "unpublished"
-    ) {
-      if (isHubLead(userData.atype)) {
-        passed = true;
-      } else if (isCampusLead(userData.atype)) {
-        passed = true;
-      }
-      // console.log('condition 2', passed)
-    }
-    if (formMetadata.userID == user.uid) {
-      passed = true;
-    }
-
-    // // console.log('passed', passed)
-    return passed;
-  }
+  // console.log('formContent:',  formContent,
+  //           'formMetadata: ',formMetadata,
+  //           'userData: ', userData,
+  //           'formRetrieved', formRetrieved )
 
   return (
     <>
-      {renderPage === true && (
-        <main>
-          {submitSuccessfully === null && formRetrieved === true && 
-            latestRetrievedForm && (
-            <Modal
-              size="lg"
-              show={showLatestFormConsent}
-              onHide={handleNoLatestForm}
-              backdrop="static"
-              keyboard={false}
-            >
-              <Modal.Header closeButton>
-                <Modal.Title>Warning</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <p>
-                  This data form is last edited by{" "}
-                  <b>{latestRetrievedForm.lastEditorEmail}</b> on{" "}
-                  <b>{latestRetrievedForm.editedDateTime}</b>. Any new changes
-                  you make will overwrite the current table content.
-                </p>
-              </Modal.Body>
-              <Modal.Footer>
-                {/* <Button variant="secondary" onClick={handleNoLatestForm}>
-                    No, I will fill a new data form 
-                  </Button> */}
-                <Button variant="primary" onClick={handleYesLatestForm}>
-                  I understand. Please proceed.
-                </Button>
-              </Modal.Footer>
-            </Modal>
-          )}
-          <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>Submission Successful!</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>Your form has been submitted successfully!</Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-            </Modal.Footer>
-          </Modal>
-          <h2>
-            Automatic Form (ID: <i>auto-{formId}</i>)
-          </h2>
-          <div>
-            {!user && (
-              <h2>YOU ARE NOT LOGGED IN! Please Login to fill out the form!</h2>
-            )}
-            {isLoading && <Loading />}
-            {user &&
-            formContent &&
+      <main>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Submission Successful!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Your form has been submitted successfully!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        {/* <h2>
+          File (ID: <i>auto-{formId}</i>)
+        </h2> */}
+        <div>
+          {isLoading && <Loading />}
+          { formContent &&
             formMetadata &&
             userData &&
-            formRetrieved &&
-            validatePermission(userData) ? (
-              /* <form onSubmit={handleSubmit(onSubmit)} ref={thisform}> */
-              <div>
-                {/* {console.log("consent: ", formRetrieveConsent)} */}
-                <h2>Data Form Name: {formMetadata.formTitle}</h2>
-                <p></p>
-                <span>Last Editor: {latestRetrievedForm.lastEditorEmail}</span>
-                <p>Last Edited On: {latestRetrievedForm.editedDateTime} </p>
-                
-                <div className="form-group d-grid gap-2 d-md-flex justify-content-md-end">
+            formRetrieved && (
+            /* <form onSubmit={handleSubmit(onSubmit)} ref={thisform}> */
+            <div>
+              {console.log("consent: ", formRetrieveConsent)}
+              <h2>File Name: {formMetadata.formTitle}</h2>
+              <p></p>
+              <p>Last Edited On: {latestRetrievedForm.editedDateTime} </p>
+
+              <div className="form-group d-grid gap-2 d-md-flex justify-content-md-end">
                 <button
-                    onClick={() => window.location.reload(false)}
-                    className="btn mr-1 btn-primary submit-btn-normal"
-                  >
-                    {"Refresh"}
-                  </button>
-                  {!(!isHubLead(userData.atype) && formMetadata.creatorID !== user.uid) && 
-                  <button
-                    type="submit"
-                    onClick={() => onSubmit(submissionData)}
-                    className="btn mr-1 btn-primary submit-btn-normal"
-                  >
-                    {"Submit"}
-                  </button>
-                  }
-                </div>
-                
-                <div
-                  className="mb-3 mt-3"
-                  style={{
-                    maxWidth: "100%",
-                    maxHeight: "80vh",
-                    overflow: "scroll"
-                  }}
+                  onClick={() => window.location.reload(false)}
+                  className="btn mr-1 btn-primary submit-btn-normal"
                 >
-                  {
-                    <div>
-                      {/* {console.log("formMetadata:", formMetadata)} */}
-                      {refresh &&
+                  {"Refresh"}
+                </button>
+                <button
+                  type="submit"
+                  onClick={() => onSubmit(submissionData)}
+                  className="btn mr-1 btn-primary submit-btn-normal"
+                >
+                  {"Submit"}
+                </button>
+              </div>
+
+              <div
+                className="mb-3 mt-3"
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "80vh",
+                  overflow: "scroll"
+                }}
+              >
+                {
+                  <div>
+                    {console.log("formMetadata:", formMetadata)}
+                    {refresh &&
                       <CreateGrid
                         // key={formRetrieveConsent}
-                        viewOnly={!isHubLead(userData.atype) && formMetadata.creatorID !== user.uid}
                         formContent={formContent}
                         latestRetrievedForm={latestRetrievedForm}
                         setSubmissionData={setSubmissionData}
                       />}
-                    </div>
-                  }
-                </div>
+                  </div>
+                }
               </div>
-            ) : (
-              <h2>
-                FORM DOES NOT EXIST OR YOU DON'T HAVE PERMISSION TO VIEW THIS
-                FORM!
-              </h2>
-            )}
-          </div>
-        </main>
-      )}
+            </div>
+          ) }
+        </div>
+      </main>
     </>
   );
 }

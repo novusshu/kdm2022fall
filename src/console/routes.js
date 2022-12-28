@@ -3,7 +3,8 @@ import React from 'react'
 const Dashboard = React.lazy(() => import('./views/Dashboard'))
 const TableCsvUpload = React.lazy(() => import('./views/Table/TableCsvUpload'))
 const Calendar = React.lazy(() => import('./views/Calendar/MyCal'))
-const UploadedFiles = React.lazy(() => import('./views/Table/UploadedFiles'))
+const FileList = React.lazy(() => import('./views/Table/UploadedFiles'))
+const File = React.lazy(() => import('./views/Table/TableFormRendering'))
 const QuestionAnswer = React.lazy(() => import('./views/QnA/QuestionAnswer'))
 const ProjectList = React.lazy(() => import('./views/Projects/ProjectList'))
 const Project = React.lazy(() => import('./views/Projects/Project'))
@@ -58,9 +59,10 @@ const Project = React.lazy(() => import('./views/Projects/Project'))
 const routes = [
   // { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
-  { path: '/tablecsvupload', name: 'Upload Table', element: TableCsvUpload },
+  { path: '/import', name: 'Import', element: TableCsvUpload },
   { path: '/calendar', name: 'Calendar', element: Calendar },
-  { path: '/uploadedfiles', name: 'Uploaded Files', element: UploadedFiles },
+  { path: '/filelist', name: 'File List', element: FileList },
+  { path: '/files/:formId', name: 'Files', element: File },
   // { path: '/qa', name: 'Q & A', element: QuestionAnswer },
   { path: '/projectlist', name: 'Project List', element: ProjectList },
   { path: '/projects/:projectID', name: 'Projects', element: Project },

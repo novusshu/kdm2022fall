@@ -34,7 +34,7 @@ export const NewTableSummary = ({
   setBlinkingFormID,
 }) => {
   console.log("latestUnuploadedForm", latestUnuploadedForm);
-  const formdb = "table_library";
+  const formdb = "uploads_index";
   const validationSchema = Yup.object().shape({
     formTitle: Yup.string()
       .required("Cannot be empty!")
@@ -121,7 +121,7 @@ export const NewTableSummary = ({
     oldShardNum = 0,
     merge = false,
     limit = 200,
-    collectionName = "table_library"
+    collectionName = "uploads_index"
   ) => {
     console.log("data from writeTemplateToFirebase: ", data);
     const shardNum = Math.ceil(data.form_content.length / limit) + oldShardNum;
@@ -173,7 +173,7 @@ export const NewTableSummary = ({
     oldShardNum = 0,
     merge = false,
     limit = 200,
-    collectionName = "automatic_table_submissions"
+    collectionName = "uploads_content"
   ) => {
     console.log("oldShardNum ", oldShardNum);
     setIsLoading(true);
@@ -223,12 +223,10 @@ export const NewTableSummary = ({
 
   const handleUpload = async (data, e) => {
     e.preventDefault();
-    const formTitle = data.formTitle;
-
     if (formData) {
       formData = {
         ...formData,
-        formTitle,
+        ...data
       };
     } else {
       console.log("File was not selected");
@@ -236,7 +234,7 @@ export const NewTableSummary = ({
     // console.log(data)
 
     if (formId) {
-      let docSnapshot = await getDoc(doc(db, "table_library", formId));
+      let docSnapshot = await getDoc(doc(db, "uploads_index", formId));
       const oldShardNum = docSnapshot.data().shardNum;
       await writeTemplateToFirebase(formData, oldShardNum, true);
       if (formData.form_content.length > 0) {
@@ -258,12 +256,11 @@ export const NewTableSummary = ({
       {/* <ReactTooltip backgroundColor={theme.highlightColor} /> */}
 
       {/* <div className="card m-5 border-light"> */}
-      <Card mb-5>
+      <Card className="mb-5">
         <div className="card-body">
           <h2>
-            New Form Overview{" "}
             <span>
-              (Form ID: <i>{formID}</i>)
+              File ID: <i>{formID}</i>
             </span>
           </h2>
           {isLoading && <Loading />}
@@ -274,7 +271,14 @@ export const NewTableSummary = ({
               <div className="row">
                 <Input
                   name="formTitle"
-                  label="Form Name"
+                  label="File Name"
+                  className="mb-3 col-xl-6"
+                />
+                </div>
+                <div className="row">
+                <Input
+                  name="notes"
+                  label="Short Notes"
                   className="mb-3 col-xl-6"
                 />
                 <p>Number of Rows: {numberOfQuestions}</p>

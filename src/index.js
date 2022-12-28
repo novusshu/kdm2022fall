@@ -15,7 +15,7 @@ root.render((
           <App />
           </BrowserRouter>
     
-  </React.StrictMode>
+ </React.StrictMode>
 ))
 
 // const rootElement = document.getElementById("root");

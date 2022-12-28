@@ -58,33 +58,33 @@ const Dashboard = () => {
   const random = (min, max) => Math.floor(Math.random() * (max - min + 1) + min)
 
   const progressExample = [
-    { title: 'Visits', value: '29.703 Users', percent: 40, color: 'success' },
-    { title: 'Unique', value: '24.093 Users', percent: 20, color: 'info' },
-    { title: 'Pageviews', value: '78.706 Views', percent: 60, color: 'warning' },
-    { title: 'New Users', value: '22.123 Users', percent: 80, color: 'danger' },
-    { title: 'Bounce Rate', value: 'Average Rate', percent: 40.15, color: 'primary' },
+    { title: 'Reads', value: '29.703', percent: 40, color: 'success' },
+    { title: 'Searches', value: '24.093', percent: 20, color: 'info' },
+    { title: 'Questions', value: '78.706', percent: 60, color: 'warning' },
+    { title: 'Answers', value: '22.123', percent: 80, color: 'danger' },
+    // { title: 'Bounce Rate', value: 'Average Rate', percent: 40.15, color: 'primary' },
   ]
 
   const progressGroupExample1 = [
-    { title: 'Monday', value1: 34, value2: 78 },
-    { title: 'Tuesday', value1: 56, value2: 94 },
-    { title: 'Wednesday', value1: 12, value2: 67 },
-    { title: 'Thursday', value1: 43, value2: 91 },
-    { title: 'Friday', value1: 22, value2: 73 },
-    { title: 'Saturday', value1: 53, value2: 82 },
-    { title: 'Sunday', value1: 9, value2: 69 },
+    { title: 'nsf3892', value1: 34, value2: 78 },
+    { title: 'nsf832', value1: 56, value2: 94 },
+    { title: 'nsf623', value1: 12, value2: 67 },
+    // { title: 'Thursday', value1: 43, value2: 91 },
+    // { title: 'Friday', value1: 22, value2: 73 },
+    // { title: 'Saturday', value1: 53, value2: 82 },
+    // { title: 'Sunday', value1: 9, value2: 69 },
   ]
 
   const progressGroupExample2 = [
-    { title: 'Male', icon: cilUser, value: 53 },
-    { title: 'Female', icon: cilUserFemale, value: 43 },
+    { title: 'NSF', icon: cilUser, value: 53 },
+    { title: 'NIH', icon: cilUserFemale, value: 43 },
   ]
 
   const progressGroupExample3 = [
-    { title: 'Organic Search', icon: cibGoogle, percent: 56, value: '191,235' },
-    { title: 'Facebook', icon: cibFacebook, percent: 15, value: '51,223' },
-    { title: 'Twitter', icon: cibTwitter, percent: 11, value: '37,564' },
-    { title: 'LinkedIn', icon: cibLinkedin, percent: 8, value: '27,319' },
+    // { title: 'Organic Search', icon: cibGoogle, percent: 56, value: '191,235' },
+    // { title: 'Facebook', icon: cibFacebook, percent: 15, value: '51,223' },
+    // { title: 'Twitter', icon: cibTwitter, percent: 11, value: '37,564' },
+    // { title: 'LinkedIn', icon: cibLinkedin, percent: 8, value: '27,319' },
   ]
 
   const tableExample = [
@@ -320,13 +320,13 @@ const Dashboard = () => {
                   <CRow>
                     <CCol sm={6}>
                       <div className="border-start border-start-4 border-start-info py-1 px-3">
-                        <div className="text-medium-emphasis small">New Clients</div>
+                        <div className="text-medium-emphasis small">New Reads</div>
                         <div className="fs-5 fw-semibold">9,123</div>
                       </div>
                     </CCol>
                     <CCol sm={6}>
                       <div className="border-start border-start-4 border-start-danger py-1 px-3 mb-3">
-                        <div className="text-medium-emphasis small">Recurring Clients</div>
+                        <div className="text-medium-emphasis small">New Questions</div>
                         <div className="fs-5 fw-semibold">22,643</div>
                       </div>
                     </CCol>
@@ -350,13 +350,13 @@ const Dashboard = () => {
                   <CRow>
                     <CCol sm={6}>
                       <div className="border-start border-start-4 border-start-warning py-1 px-3 mb-3">
-                        <div className="text-medium-emphasis small">Pageviews</div>
+                        <div className="text-medium-emphasis small">New Projects</div>
                         <div className="fs-5 fw-semibold">78,623</div>
                       </div>
                     </CCol>
                     <CCol sm={6}>
                       <div className="border-start border-start-4 border-start-success py-1 px-3 mb-3">
-                        <div className="text-medium-emphasis small">Organic</div>
+                        <div className="text-medium-emphasis small">New Answers</div>
                         <div className="fs-5 fw-semibold">49,123</div>
                       </div>
                     </CCol>

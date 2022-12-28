@@ -54,12 +54,12 @@ const UploadedList = ({
   return (
     <div className="card mt-1 mb-1 border-light" ref={wrapperRef}>
       <div className="card-body">
-        <h2>Uploaded File List</h2>
+        <h2>File List</h2>
         <BootstrapTable>
           <thead>
             <tr>
               <th></th>
-              <th>Table ID</th>
+              <th>File ID</th>
               <th>File Format</th>
               <th>Sheet Name</th>
               <th>File Name</th>

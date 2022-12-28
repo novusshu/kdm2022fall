@@ -41,16 +41,16 @@ export default function ProjectList() {
     useEffect(() => {
         let allSubmittedTables = []
 
-        const q = query(collection(db, "automatic_table_submissions"),
+        const q = query(collection(db, "uploads_content"),
             where("userID", "==", user.uid))
         const unsubscribe = onSnapshot(q, (qSnapShot) => {
-                qSnapShot.forEach(docSnapShot => {
-                    const raw = docSnapShot.data();
-                    allSubmittedTables.push(...raw?.form_content);
-                })
-                // console.log('allSubmittedTables: ', allSubmittedTables)
-                setProjectlist(allSubmittedTables)
+            qSnapShot.forEach(docSnapShot => {
+                const raw = docSnapShot.data();
+                allSubmittedTables.push(...raw?.form_content);
             })
+            // console.log('allSubmittedTables: ', allSubmittedTables)
+            setProjectlist(allSubmittedTables)
+        })
     }, [user])
 
     console.log(projectlist)
@@ -71,14 +71,14 @@ export default function ProjectList() {
                         {projectlist.map((item, index) => (
                             <CTableRow v-for="item in tableItems" key={index}>
                                 <CTableDataCell>
-                                <div>
-                                <Link
-                          to={`/user/projects/${item['NSF/PD Num']}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {item['NSF/PD Num']}
-                        </Link>
+                                    <div>
+                                        <Link
+                                            to={`/user/projects/${item['NSF/PD Num']}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {item['NSF/PD Num']}
+                                        </Link>
                                     </div>
                                 </CTableDataCell>
                                 <CTableDataCell>
