@@ -8,6 +8,7 @@ const File = React.lazy(() => import('./views/Table/TableFormRendering'))
 const QuestionAnswer = React.lazy(() => import('./views/QnA/QuestionAnswer'))
 const ProjectList = React.lazy(() => import('./views/Projects/ProjectList'))
 const Project = React.lazy(() => import('./views/Projects/Project'))
+const Search = React.lazy(() => import('./views/Search/Search'))
 // const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
 // // Base
@@ -66,6 +67,7 @@ const routes = [
   // { path: '/qa', name: 'Q & A', element: QuestionAnswer },
   { path: '/projectlist', name: 'Project List', element: ProjectList },
   { path: '/projects/:projectID', name: 'Projects', element: Project },
+  { path: '/search', name: 'Search', element: Search },
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },
   // { path: '/theme/colors', name: 'Colors', element: Colors },
   // { path: '/theme/typography', name: 'Typography', element: Typography },

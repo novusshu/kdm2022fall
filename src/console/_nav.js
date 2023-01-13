@@ -28,6 +28,29 @@ const _nav = [
   },
   {
     component: CNavTitle,
+    name: 'Grants',
+  },
+
+  {
+    component: CNavItem,
+    name: 'Search',
+    to: '/user/search',
+    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'NSF Funding List',
+    to: '/user/projectlist',
+    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Question Answering',
+    to: '/user/qa',
+    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavTitle,
     name: 'My Uploads',
   },
   {
@@ -52,23 +75,7 @@ const _nav = [
     to: '/user/calendar',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
   },
-  {
-    component: CNavTitle,
-    name: 'Grants',
-  },
 
-  {
-    component: CNavItem,
-    name: 'NSF Funding List',
-    to: '/user/projectlist',
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'Question Answering',
-    to: '/user/qa',
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-  },
   // {
   //   component: CNavTitle,
   //   name: 'Theme',

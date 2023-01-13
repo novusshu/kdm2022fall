@@ -1,0 +1,31 @@
+.app{
+  width: 60%;
+  margin: auto;
+  color: white;
+  height: min-content;
+  padding-bottom: 5%;
+}
+
+.title{
+  text-align: center;
+}
+
+.main-content{
+  padding: 0 5%;
+}
+
+.disclaimer-container{
+  padding: 5% 5% 0 5%;
+}
+
+.no-results{
+  padding: 0 5%;
+  color: grey;
+  font-size: .8em;
+}
+
+@media only screen and (max-width: 880px) {
+  .app{
+    width: 90%;
+  }
+}
