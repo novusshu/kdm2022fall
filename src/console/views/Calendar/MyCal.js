@@ -283,7 +283,121 @@ export default function MyCal() {
               </Button> */}
             </div>
 
-           
+            <div className="dashboard">
+              <div className="search-toggle">
+                <div>
+                  <h3>
+                    <Stack>
+                      <TextField
+                        // labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Search By Name"
+                        color="success"
+                        fullWidth
+                        variant="filled"
+                        onChange={handleDueProjects}
+                      />
+                      <div className="text-field">
+                        {console.log('projectDetails: ', projectDetails)}
+                        {projectDetails.map((item) => (
+                          <>
+                            <Button
+                              key={item["URL"]}
+                              value={item}
+                              style={{
+                                textTransform: 'none',
+                                display: "flex",
+                                justifyContent: "flex-start",
+                                margin: "10px",
+                                textAlign: "left",
+                              }}
+                              onClick={() => {
+                                setDisplayedProject(item);
+                                setDisplayCurrent(3);
+                                openMapHandler();
+                              }}
+                            >
+                              ・{item["Title"]}
+                            </Button>
+                          </>
+                        ))}{" "}
+                      </div>
+                    </Stack>
+                  </h3>
+                </div>
+                <div className="toggle">
+                  <p>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<Switch />}
+                        label="Projects with due dates"
+                        onClick={handleToggle}
+                      />
+                    </FormGroup>
+                  </p>
+                </div>
+              </div>
+
+              <div className="projects-list">
+                {toggle === true ? (
+                  <div className="field-selects">
+                    <h3>
+                      {dueprojects.map((item) => (
+                        <>
+                          <Button
+                            key={item["URL"]}
+                            value={item}
+                            style={{
+                              textTransform: 'none',
+                              display: "flex",
+                              justifyContent: "flex-start",
+                              margin: "10px",
+                              textAlign: "left",
+                            }}
+                            onClick={() => {
+                              setDisplayedProject(item);
+                              setDisplayCurrent(3);
+                              openMapHandler();
+                            }}
+                          >
+                            ・{item["Title"]}
+                          </Button>
+                          <p></p>
+                        </>
+                      ))}
+                    </h3>
+                  </div>
+                ) : (
+                  <div className="field-selects">
+                    <h3>
+                      {nondueprojects.map((item) => (
+                        <>
+                          <Button
+                            key={item["URL"]}
+                            value={item}
+                            style={{
+                              textTransform: 'none',
+                              display: "flex",
+                              justifyContent: "flex-start",
+                              margin: "10px",
+                              textAlign: "left",
+                            }}
+                            onClick={() => {
+                              setDisplayedProject(item);
+                              setDisplayCurrent(3);
+                              openMapHandler();
+                            }}
+                          >
+                            ・{item["Title"].toLowerCase()}
+                          </Button>
+                          <p></p>
+                        </>
+                      ))}
+                    </h3>
+                  </div>
+                )}
+              </div>
+            </div>
           </section>
 
     </>

@@ -49,6 +49,17 @@ const _nav = [
     to: '/user/qa',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
+    {
+    component: CNavTitle,
+    name: 'Planner',
+  },
+
+  {
+    component: CNavItem,
+    name: 'Gantt Chart',
+    to: '/user/gantt',
+    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+  },
   {
     component: CNavTitle,
     name: 'My Uploads',

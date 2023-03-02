@@ -12,7 +12,7 @@ const Search = () => {
   const onSearchSubmit = async term => {
     console.log('New Search submit:', term);
     const quotesArray = await requestQuotes(term);
-    setNoResults(quotesArray?.length === 0);
+    setNoResults(quotesArray.length === 0);
     console.log(quotesArray)
     setQuotes(quotesArray);
   };
