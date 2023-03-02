@@ -1,0 +1,19 @@
+{
+  "name": "mock_firestore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "fake_json.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^7.3.0"
+  },
+  "dependencies": {
+    "firebase-admin": "^11.0.0"
+  }
+}
