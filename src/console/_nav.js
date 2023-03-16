@@ -26,20 +26,40 @@ const _nav = [
     //   text: 'NEW',
     // },
   },
-  {
-    component: CNavTitle,
-    name: 'Grants',
-  },
+
+
 
   {
+    component: CNavTitle,
+    name: 'My Planner',
+  },
+  {
     component: CNavItem,
-    name: 'Search',
-    to: '/user/search',
+    name: 'My Projects',
+    to: '/user/mylist',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'NSF Funding List',
+    name: 'My Calendar',
+    to: '/user/calendar',
+    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'My Scheduler',
+    to: '/user/gantt',
+    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+  },
+
+
+  {
+    component: CNavTitle,
+    name: 'Search',
+  },
+  {
+    component: CNavItem,
+    name: 'NSF Funding',
     to: '/user/projectlist',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
@@ -49,17 +69,9 @@ const _nav = [
     to: '/user/qa',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
-    {
-    component: CNavTitle,
-    name: 'Planner',
-  },
 
-  {
-    component: CNavItem,
-    name: 'Gantt Chart',
-    to: '/user/gantt',
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-  },
+
+
   {
     component: CNavTitle,
     name: 'My Uploads',
@@ -76,16 +88,8 @@ const _nav = [
     to: '/user/filelist',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
-  {
-    component: CNavTitle,
-    name: 'My Calendar',
-  },
-  {
-    component: CNavItem,
-    name: 'Calendar',
-    to: '/user/calendar',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
-  },
+
+
 
   // {
   //   component: CNavTitle,

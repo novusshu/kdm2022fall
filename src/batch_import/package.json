@@ -1,19 +1,16 @@
 {
-  "name": "mock_firestore",
+  "name": "batch_import",
   "version": "1.0.0",
   "description": "",
-  "main": "fake_json.js",
-  "type": "module",
+  "main": "upload.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@faker-js/faker": "^7.3.0"
-  },
   "dependencies": {
-    "firebase-admin": "^11.0.0"
+    "csv-parser": "^3.0.0",
+    "firebase-admin": "^11.5.0",
+    "fs": "^0.0.1-security"
   }
 }

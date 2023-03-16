@@ -1,120 +1,155 @@
-import React, { useEffect, useState } from 'react';
-import { FrappeGantt } from 'frappe-gantt-react';
+import {useState} from "react";
+import {
+	GanttOriginal,
+	ViewMode,
+} from "react-gantt-chart";
 
+// *** OTHER ***
+import ViewSwitcher from "./ViewSwitcher";
+import { getStartEndDateForProject, initTasks } from "./helpers";
+import { CButton, CCol, CForm, CModal } from "@coreui/react/dist";
 
 const GanttChart = () => {
-    const [viewMode, setViewMode] = useState("Day");
+	// *** USE STATE ***
+	const [tasks, setTasks] = useState(initTasks());
+	const [view, setView] = useState(ViewMode.Month);
+	const [isChecked, setIsChecked] = useState(true);
 
-    const [tasks, setTasks] = useState([
-        {
-            id: "Task 1",
-            name: "Create a Gantt chart",
-            start: "2023-03-02",
-            end: "2023-03-06",
-            progress: 50,
-        },
-        {
-            id: "Task 2",
-            name: "Add dependencies",
-            start: "2023-03-06",
-            end: "2023-03-08",
-            progress: 25,
-            dependencies: ["Task 1"],
-        },
-        {
-            id: "Task 3",
-            name: "Test the chart",
-            start: "2023-03-09",
-            end: "2023-03-10",
-            progress: 0,
-            dependencies: ["Task 1"],
-        },
-    ]);
-    const handleQuarterDayClick = () => {
-        setViewMode("Quarter Day");
-    };
+	// *** CONSTANTS ***
+	let columnWidth = 60;
+	if (view === ViewMode.Month) {
+		columnWidth = 300;
+	} else if (view === ViewMode.Week) {
+		columnWidth = 250;
+	}
 
-    const handleHalfDayClick = () => {
-        setViewMode("Half Day");
-    };
+	// *** HANDLERS ***
+	const handleTaskChange = (task) => {
+		console.log("On date change Id:" + task.id);
 
-    const handleDayClick = () => {
-        setViewMode("Day");
-    };
+		let newTasks = tasks.map((t) => (t.id === task.id ? task : t));
 
-    const handleWeekClick = () => {
-        setViewMode("Week");
-    };
+		if (task.project) {
+			const [start, end] = getStartEndDateForProject(newTasks, task.project);
+			const project =
+				newTasks[newTasks.findIndex((t) => t.id === task.project)];
 
-    const handleMonthClick = () => {
-        setViewMode("Month");
-    };
+			if (
+				project.start.getTime() !== start.getTime() ||
+				project.end.getTime() !== end.getTime()
+			) {
+				const changedProject = { ...project, start, end };
+				newTasks = newTasks.map((t) =>
+					t.id === task.project ? changedProject : t
+				);
+			}
+		}
 
-    const handleAddTask = () => {
-        const newTask = {
-            id: `Task ${tasks.length + 1}`,
-            name: "New task",
-            start: "2023-03-11",
-            end: "2023-03-14",
-            progress: 0,
-            dependencies: ["Task 1"],
-        };
-        setTasks([...tasks, newTask]);
-    };
-    
+		setTasks(() => newTasks);
+	};
 
-    const handleEditTask = (taskId, propName, propValue) => {
-        const taskIndex = tasks.findIndex((task) => task.id === taskId);
-        const task = tasks[taskIndex];
-        const updatedTask = { ...task, [propName]: propValue };
-        const updatedTasks = [
-          ...tasks.slice(0, taskIndex),
-          updatedTask,
-          ...tasks.slice(taskIndex + 1),
-        ];
-        setTasks(updatedTasks);
-      };
+	const handleTaskDelete = (task) => {
+		const conf = window.confirm("Are you sure about " + task.name + " ?");
+		if (conf) {
+			setTasks(() => tasks.filter((t) => t.id !== task.id));
+		}
+		return conf;
+	};
 
-      const handleTaskClick = (task) => {
-        const newName = prompt("Enter a new name for the task", task.name);
-        if (newName !== null) {
-          const newDependencies = prompt(
-            "Enter a new value for dependencies (comma separated)",
-            task.dependencies.join(", ")
-          );
-          if (newDependencies !== null) {
-            handleEditTask(task.id, "name", newName);
-            handleEditTask(task.id, "dependencies", newDependencies.split(", "));
-          }
-        }
-      };
-    
-      const handleDeleteTask = (taskId) => {
-        const updatedTasks = tasks.filter((task) => task.id !== taskId);
-        setTasks(updatedTasks);
-      };
-    return (
-        <>
-            <div>
-                <FrappeGantt tasks={tasks}
-                    viewMode={viewMode} 
-                    onTaskUpdated={handleEditTask} 
-                    onClick={handleTaskClick}/>
-            </div>
-            <div>
-                <button onClick={handleQuarterDayClick}>Quarter Day</button>
-                <button onClick={handleHalfDayClick}>Half Day</button>
-                <button onClick={handleDayClick}>Day</button>
-                <button onClick={handleWeekClick}>Week</button>
-                <button onClick={handleMonthClick}>Month</button>
-            </div>
-            <div>
-                <button onClick={handleAddTask}>Add Task</button>
-            </div>
-        </>
-    );
+	const handleProgressChange = async (task) => {
+		console.log("On progress change Id:" + task.id);
+		setTasks(() => tasks.map((t) => (t.id === task.id ? task : t)));
+	};
+
+	const handleDblClick = (task) => {
+		console.log("On Double Click event Id:" + task.id);
+	};
+
+	const handleSelect = (task, isSelected) => {
+		console.log(task.name + " has " + (isSelected ? "selected" : "unselected"));
+	};
+
+	const handleExpanderClick = (task) => {
+		console.log("On expander click Id:" + task.id);
+		setTasks(() => tasks.map((t) => (t.id === task.id ? task : t)));
+	};
+
+	return (
+		<>
+
+        {/* <CModal 
+            show={true}
+            onClose={() => {}}
+            color="primary"
+        >
+            <CModalHeader closeButton>
+                <CModalTitle>Modal title</CModalTitle>
+            </CModalHeader>
+            <CModalBody>
+                <CForm>
+                    <CFormGroup>
+                        <CLabel htmlFor="nf-email">Project Name</CLabel>
+                        <CInput
+                            type="email"
+                            id="nf-email"
+                            name="nf-email"
+                            placeholder="Enter Email.."
+                            autoComplete="email"
+                        />
+                        <CFormText className="help-block">Please enter your email</CFormText>
+                    </CFormGroup>
+                    <CFormGroup>
+                        <CLabel htmlFor="">Start</CLabel>
+                        <CInput
+                            type="email"
+                            id="nf-email"
+                            name="nf-email"
+                            placeholder="Enter Email.."
+                            autoComplete="email"
+                        />
+                        <CFormText className="help-block">Please enter your email</CFormText>
+                    </CFormGroup>
+                </CForm>
+
+                </CModalBody>
+            <CModalFooter>
+                <CButton color="secondary" onClick={() => {}}>Cancel</CButton>
+                <CButton color="primary" onClick={() => {}}>Confirm</CButton>{' '}
+            </CModalFooter>
+        </CModal> */}
+
+			<ViewSwitcher
+				onViewModeChange={(viewMode) => setView(() => viewMode)}
+				onViewListChange={setIsChecked}
+				isChecked={isChecked}
+			/>
+
+            <CCol className="mb-2">
+                <CButton color="primary">Generate Timeline from Favorites</CButton>
+            </CCol>
+
+			{/* ORIGINAL */}
+			{/* <h3>My Scheduler</h3> */}
+			<GanttOriginal
+				tasks={tasks}
+				viewMode={view}
+				// handlers
+				onDateChange={handleTaskChange}
+				onDelete={handleTaskDelete}
+				onProgressChange={handleProgressChange}
+				onDoubleClick={handleDblClick}
+				onSelect={handleSelect}
+				onExpanderClick={handleExpanderClick}
+				// styles
+				listCellWidth={isChecked ? "155px" : ""}
+				columnWidth={columnWidth}
+                ganttHeight="72vh"
+                locale="en-US"
+			/>
+
+			
+		</>
+	);
 };
 
 export default GanttChart;
-
-

@@ -1,7 +1,10 @@
+// https://javascript.plainenglish.io/automate-importing-data-to-firestore-836b0a2cdcfd
 var admin = require("firebase-admin");
-var serviceAccount = require("./includes-5bac5-firebase-adminsdk-zqqyr-c8a0d0848d.json");
-const data = require("./data.json");
+var serviceAccount = require("./keys/kdm2022fall-firebase-adminsdk-v6296-78382cc16a.json");
+
 const collectionKey = "Projects"; //name of the collection
+const fs = require('fs');
+const csv = require('csv-parser');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -12,17 +15,21 @@ const settings = { timestampsInSnapshots: true };
 
 firestore.settings(settings);
 
-if (data && typeof data === "object") {
-  Object.keys(data).forEach((docKey) => {
-    firestore
-      .collection(collectionKey)
       .doc('mock'+docKey)
-      .set(data[docKey])
-      .then((res) => {
-        console.log("Document " + docKey + " written!");
-      })
-      .catch((error) => {
-        console.error("Error: ", error);
-      });
+
+const path = require('path');
+
+const nsfPath = path.join(__dirname, 'nsf_funding.csv');
+fs.createReadStream(nsfPath)
+  .pipe(csv())
+  .on('data', (data) => {
+    // Add data to Firestore
+    data = {
+      BIIN_PROJECT_ID: data['NSF/PD Num'] + '_' + data['Program ID'],
+      ...data
+    }
+    firestore.collection(collectionKey).doc().set(data);
+  })
+  .on('end', () => {
+    console.log('Data imported successfully');
   });
-}
