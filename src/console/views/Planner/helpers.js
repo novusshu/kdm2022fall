@@ -1,5 +1,102 @@
+import {db} from "../../../firebasedb";
+import {collection, getDocs, query, where, doc, getDoc, updateDoc, arrayRemove} from "firebase/firestore";
+import { useUserAuth } from "../../../context/UserAuthContext";
+import {useState, useEffect} from "react";
+import { fetchData, retrieveProjects } from '../utils';
+
+// function makeArr(startValue, stopValue, cardinality) {
+//     var arr = [];
+//     var step = (stopValue - startValue) / (cardinality - 1);
+//     for (var i = 0; i < cardinality; i++) {
+//       arr.push(startValue + (step * i));
+//     }
+//     return arr;
+//   }
+
+// export const createTasksFromFavorites = async ({setTasks}) => {
+
+//     const [myProjects, setMyProjects] = useState([])
+//     const [results, setResults] = useState([])
+//     await fetchData(user.uid, setMyProjects, 'Favorites')
+//     await retrieveProjects(myProjects, setResults)
+
+//     let tasks = []
+//     results.forEach((result, index) => {
+
+//         today = new Date()
+//         days = 86400000
+
+//         let due = new Date(result['Next due date (Y-m-d)'].split(',')[0])
+//         let start = today
+//         let totalDays = (due - start) / days
+//         let period = makeArr(0, totalDays, 4)
+//         let projectID = result.BIIN_PROJECT_ID
+//         let threeSteps = [
+
+//             {
+//                 line: 0,
+//                 type: "project",
+//                 id: projectID,
+//                 name: "1.Project",
+//                 start: today,
+//                 end: due,
+//                 progress: 25,
+//                 hideChildren: false,
+//             },
+//             {
+//                 line: 1,
+//                 type: "task",
+//                 id: "Task 0",
+//                 name: "1.1 Task",
+//                 start: new Date(2021, 6, 1),
+//                 end: new Date(2021, 6, 30),
+//                 progress: 1,
+//                 project: projectID,
+//             },
+//             {
+//                 line: 2,
+//                 type: "task",
+//                 id: "Task 1",
+//                 name: "1.2 Task",
+//                 start: new Date(2021, 7, 1),
+//                 end: new Date(2021, 7, 30),
+//                 progress: 25,
+//                 dependencies: ["Task 0"],
+//                 project: "ProjectSample",
+//             },
+
+//         ]
+
+//     useEffect(() => {
+//         { console.log('My Projects: ', myProjects) }
+//         if (myProjects?.favoriteList) {
+            
+//             retrieveProjects(myProjects, setTasks)
+//             []
+//             setTasks(tasks => tasks.map(task => {
+//         }
+
 export const initTasks = () => {
-	const tasks = [
+
+    // const [myProjects, setMyProjects] = useState([])
+    // const [myTasks, setMyTasks] = useState([])
+    // const [showMessage, setShowMessage] = useState(false)
+    // const [createTasksFromFavorites, setCreateTasksFromFavorites] = useState(false)
+
+    // const { user, userData } = useUserAuth();
+
+    // useEffect(() => {
+    //     fetchMyTasks(user.uid, setMyTasks, 'Favorites')
+    //     if(myTasks.length == 0){
+    //         setShowMessage(true)
+    //     }
+    // }, [user])
+
+
+
+    
+    
+    const tasks = [
 		// Project 1
 		{
 			line: 0,
