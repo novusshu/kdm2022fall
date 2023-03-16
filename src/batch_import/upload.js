@@ -15,7 +15,6 @@ const settings = { timestampsInSnapshots: true };
 
 firestore.settings(settings);
 
-      .doc('mock'+docKey)
 
 const path = require('path');
 
