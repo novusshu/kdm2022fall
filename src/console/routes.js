@@ -10,6 +10,7 @@ const Search = React.lazy(() => import('./views/Projects/ProjectList'))
 const Project = React.lazy(() => import('./views/Projects/Project'))
 const MyList = React.lazy(() => import('./views/Projects/MyList'))
 const Gantt = React.lazy(() => import('./views/Planner/GanttChart'))
+const Profile = React.lazy(() => import('./views/UserConfig/Profile'))
 // const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
 // // Base
@@ -70,6 +71,7 @@ const routes = [
   { path: '/projects/:projectID', name: 'Projects', element: Project },
   { path: '/mylist', name: 'My List', element: MyList },
   { path: '/gantt', name: 'Gantt', element: Gantt },
+  { path: '/profile', name: 'Profile', element: Profile}
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },
   // { path: '/theme/colors', name: 'Colors', element: Colors },
   // { path: '/theme/typography', name: 'Typography', element: Typography },
