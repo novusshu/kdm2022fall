@@ -8,9 +8,39 @@
   - Additional info: Program guidelines, etc, Updates and announcements
 - Calendar view of funding opportunities
 - Table view
-- Flexible taxonomy --- keyword search/list views/integrate with other views
+- Flexible --- keyword search/list views/integrate with other views
 - NLP-based Key info extraction
 
+
+## ToDos
+1. Search 
+
+Search function
+- Combine user own data
+
+
+Search box
+- Search fields: title, solicitation letter
+- Filters: Award Type, Directorate, Due dates
+
+Search Results
+- Pagination
+- Selectable, exportable
+- a modal after list saved, reset or more options
+
+My Projects:
+- Abbreviation names
+- Make fields editable
+
+2. Calendar
+- Year view: clickable, show deadlines
+
+3. Planner
+- Template project scheduler with milestones and timeframe
+- filter for project to show or not 
+
+4. Dashboard
+5. Visualization Awards
 
 
 ## Available Scripts

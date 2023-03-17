@@ -1,22 +1,28 @@
 import React, { useEffect, useState, useRef } from "react";
 import { db } from "../../../firebasedb";
+import { Container, Row, Col, Form, Button, ListGroup } from 'react-bootstrap';
+import { CForm, CFormCheck, CFormInput, CInputGroup, CInputGroupText } from "@coreui/react/dist";
 import {
     collection,
     onSnapshot,
     addDoc,
     doc,
+    setDoc,
     getDoc,
     getDocs,
     query,
     where,
     orderBy,
     limit,
+    updateDoc,
+    arrayUnion,
     serverTimestamp,
 } from "firebase/firestore";
 import {
     CAvatar,
     CButton,
     CButtonGroup,
+    CContainer,
     CCard,
     CCardBody,
     CCardFooter,
@@ -33,75 +39,100 @@ import {
 } from '@coreui/react'
 import { Link } from "react-router-dom";
 import { useUserAuth } from "../../../context/UserAuthContext";
+import TableOfProjects from "./TableOfProjects";
 
 export default function ProjectList() {
 
     const { user, userData } = useUserAuth();
     const [projectlist, setProjectlist] = useState(null)
-    useEffect(() => {
-        let allSubmittedTables = []
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [selectedResults, setSelectedResults] = useState([]);
+    const [checkedItems, setCheckedItems] = useState({});
 
-        const q = query(collection(db, "uploads_content"),
-            where("userID", "==", user.uid))
+    // useEffect(() => {
+    //     let allSubmittedTables = []
+
+    //     const q = query(collection(db, "uploads_content"),
+    //         where("userID", "==", user.uid))
+    //     const unsubscribe = onSnapshot(q, (qSnapShot) => {
+    //         qSnapShot.forEach(docSnapShot => {
+    //             const raw = docSnapShot.data();
+    //             allSubmittedTables.push(...raw?.form_content);
+    //         })
+    //         // console.log('allSubmittedTables: ', allSubmittedTables)
+    //         setProjectlist(allSubmittedTables)
+    //     })
+    // }, [user])
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter' && searchTerm !== '') {
+            handleSearch(searchTerm);
+        }
+    };
+
+    const handleSearch = () => {
+        let results = []
+        const fieldToMatch = 'Title'
+        const q = query(collection(db, "Projects"),
+            // where(fieldToMatch, 'array-contains', searchTerm)
+        )
         const unsubscribe = onSnapshot(q, (qSnapShot) => {
             qSnapShot.forEach(docSnapShot => {
                 const raw = docSnapShot.data();
-                allSubmittedTables.push(...raw?.form_content);
+                if (raw[fieldToMatch].toLowerCase().includes(searchTerm.toLowerCase())) {
+                    results.push(raw);
+                }
             })
-            // console.log('allSubmittedTables: ', allSubmittedTables)
-            setProjectlist(allSubmittedTables)
+            // c onsole.log('allSubmittedTables: ', allSubmittedTables)
+            setSearchResults(results)
         })
-    }, [user])
+        // console.log(results)
+    }
 
-    console.log(projectlist)
+    const favoriteDB = 'Favorites'
+    const handleSaveFavorites = async () => {
+        // Update the user document with the new data
+        await updateDoc(doc(db, favoriteDB, user.uid), 
+            { favoriteList: arrayUnion(...selectedResults), timestamp: serverTimestamp()}
+        )
+        console.log('export selected to favorites: ', selectedResults)
+    }
+
     return (
-        <>
-            {
-                projectlist &&
-                <CTable align="middle" className="mb-0 border" hover responsive>
-                    <CTableHead color="light">
-                        <CTableRow>
-                            <CTableHeaderCell className="text-center">NSF/PD Num</CTableHeaderCell>
-                            <CTableHeaderCell>Award Type</CTableHeaderCell>
-                            <CTableHeaderCell>Next due date</CTableHeaderCell>
-                            <CTableHeaderCell>Title</CTableHeaderCell>
-                        </CTableRow>
-                    </CTableHead>
-                    <CTableBody>
-                        {projectlist.map((item, index) => (
-                            <CTableRow v-for="item in tableItems" key={index}>
-                                <CTableDataCell>
-                                    <div>
-                                        <Link
-                                            to={`/user/projects/${item['NSF/PD Num']}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            {item['NSF/PD Num']}
-                                        </Link>
-                                    </div>
-                                </CTableDataCell>
-                                <CTableDataCell>
-                                    <div>{item['Award Type']}</div>
-                                </CTableDataCell>
+        <CContainer className="my-4">
+            <CRow >
+                <CInputGroup className="mb-3">
+                    <CFormInput
+                        type="text"
+                        value={searchTerm}
+                        onChange={(e) => {
+                            // e.preventDefault();
+                            setSearchTerm(e.target.value)
+                        }}
+                        placeholder="Search by Title"
+                        onKeyPress={handleKeyPress}
+                    />
+                    <CButton color="info" onClick={handleKeyPress}>Search</CButton>
+                </CInputGroup>
 
-                                <CTableDataCell>
-                                    <div className="clearfix">
-                                        <div >
-                                            <small className="text-medium-emphasis">{item['Next due date (Y-m-d)']}</small>
-                                        </div>
-                                    </div>
-                                    {/* <CProgress thin color={item.usage.color} value={item.usage.value} /> */}
-                                </CTableDataCell>
-
-                                <CTableDataCell>
-                                    <div>{item['Title']}</div>
-                                </CTableDataCell>
-                            </CTableRow>
-                        ))}
-                    </CTableBody>
-                </CTable>
-            }
-        </>
+            </CRow>
+            <CRow>
+                {
+                    searchResults.length > 0 &&
+                    <>
+                        <CCol xs="8" lg="4">
+                            <CButton color="secondary"
+                                onClick={handleSaveFavorites} disabled={selectedResults.length === 0}>
+                                Export Selected to Favorites
+                            </CButton>
+                        </CCol>
+                        <TableOfProjects displayResults={searchResults} 
+                        selectedResults={selectedResults} 
+                        setSelectedResults={setSelectedResults} />
+                    </>
+                }
+            </CRow>
+        </CContainer>
     )
 }

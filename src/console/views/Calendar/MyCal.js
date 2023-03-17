@@ -1,293 +1,114 @@
 import React, { useState, useEffect } from "react";
-import { format } from "date-fns";
-import "./style.css";
-import "./calender.css";
-import IButton from "./components/Button/Button";
-import Calendar from "./components/Calendar/Calendar";
-import Modal from "./components/UIElements/Modal";
-import Backdrop from "./components/UIElements/Backdrop";
-import SideDrawer from "./components/UIElements/SideDrawer";
-import {
-  List,
-  ListItem,
-  ListItemText,
-  Button,
-  Stack,
-  Box,
-  TextField,
-  Select,
-} from "@mui/material";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import moment from "moment";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../../firebasedb";
-import {
-  doc,
-  setDoc,
-  getDoc,
-  orderBy,
-  serverTimestamp,
-  collection,
-  query,
-  where,
-  onSnapshot
-} from "firebase/firestore";
-
-// import parsedData from "./nsf_funding.json";
 import { useUserAuth } from "../../../context/UserAuthContext";
+import { getDoc, doc, query, where, updateDoc, arrayRemove } from "firebase/firestore";
+import { CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter, CButton } from '@coreui/react';
+import Year from "./YearView";
+import './style.css'
 
-export default function MyCal() {
-  const { user } = useUserAuth();
-  const [value, onChange] = useState(new Date());
-  const currDate = format(value, "yyyy-MM-dd");
+const localizer = momentLocalizer(moment);
 
-  const [upload, setUpload] = useState(false);
-  const [input, setCheckInput] = useState(false);
-  const [projectDetails, setProjectDetails] = useState([]);
-  const [dueprojects, setDueProjects] = useState([]);
-  const [nondueprojects, setNonDueProjects] = useState([]);
-  const [displayedProject, setDisplayedProject] = useState({});
-  const [displayCurrent, setDisplayCurrent] = useState(1);
-  const [toggle, setToggle] = useState(false);
-  const [listProjects, setListProjects] = useState([]);
-  const [parsedData, setParsedData] = useState([])
+localizer.formats.yearHeaderFormat = 'YYYY'
 
-  const [random, setRandom] = useState("");
-  const [showMap, setShowMap] = useState(false);
-  const [drawerIsOpen, setDrawerIsOpen] = useState(false);
-  
+const MyCal = () => {
 
-  const openMapHandler = () => setShowMap(true);
+    const { user, userData } = useUserAuth();
+    const [events, setEvents] = useState([]);
+    const [myProjects, setMyProjects] = useState([])
+    const [visible, setVisible] = useState(false)
+    const [docData, setDocData] = useState({})
 
-  const closeMapHandler = () => setShowMap(false);
-
-  const openDrawerHandler = () => {
-    setDrawerIsOpen(true);
-  };
-
-  const closeDrawerHandler = () => {
-    setDrawerIsOpen(false);
-  };
-
-  useEffect(() => {
-    if(user){
-    const formLibraryRef = collection(db, 'uploads_content');
-    const q = query(formLibraryRef, where("userID", "==", user.uid));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const projects = [];
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        const rawData = doc.data();
-        projects.push(...rawData.form_content);
-      });
-      setParsedData(projects);
-      // console.log(projects);
-    });}
-  }, [user]);
-
-  const handleDueProjects = (e) => {
-    if(parsedData){
-    const res = parsedData.filter((detail) => {
-      return detail.Title.toLowerCase().includes(e.target.value.toLowerCase());
-    });
-    e.target.value !== "" ? setProjectDetails(res) : setProjectDetails([]);
-  }
-  };
-
-  const handleDisplayProject = async (e) => {
-    console.log(e);
-    console.log("OnChange hit");
-    setDisplayCurrent(3);
-    setDisplayedProject(e);
-    setDrawerIsOpen(true);
-  };
-
-  const handleDisplayCurr = () => {
-    console.log(displayCurrent);
-    setDisplayCurrent(2);
-
-    console.log("button working");
-    console.log(displayCurrent);
-  };
-
-  const handleToggle = () => {
-    if (toggle === true) {
-      setToggle(false);
-    } else {
-      setToggle(true);
+    async function fetchFavorites() {
+        const docSnap = await getDoc(doc(db, "Favorites", user.uid))
+        if (docSnap.exists()) {
+            // console.log("Document data:", docSnap.data());
+            setMyProjects(docSnap.data())
+        } else {
+            console.log("No such document!");
+        }
     }
-  };
 
-  const filterDueprojects = async () => {
-    const res = await parsedData.filter((detail) => {
-      return detail["Next due date (Y-m-d)"].length;
-    });
-    setDueProjects(res);
-  };
-  // ---------console.logs here---------
-  const filterNonDueprojects = async () => {
-    const res = await parsedData.filter((detail) => {
-      return !detail["Next due date (Y-m-d)"].length;
-    });
-    console.log(currDate);
-    console.log(displayedProject);
-    setNonDueProjects(res);
-    console.log(parsedData);
-    console.log(dueprojects);
-    console.log(nondueprojects);
-  };
-
-  const currDateProject = () => {
-    console.log(displayedProject);
-    if (displayCurrent) {
-      const res = parsedData.filter((detail) => {
-        return (
-          detail["Next due date (Y-m-d)"] ===
-          displayedProject["Next due date (Y-m-d)"]
-        );
-      });
-      console.log("response working");
-      setListProjects(res);
-      console.log(listProjects);
-      setDisplayCurrent(2);
+    const retrieveProjects = async () => {
+        const q = query(collection(db, "Projects"),
+            where("BIIN_PROJECT_ID", "in", myProjects.favoriteList))
+        const docSnapShot = await getDocs(q);
+        const data = docSnapShot.docs.map(doc => doc.data())
+        // console.log('data: ', data)
+        const events = data.filter(doc => doc['Next due date (Y-m-d)'])
+            .map(doc => {
+                let day = new Date(doc['Next due date (Y-m-d)'].split(',')[0])
+                return {
+                    title: doc.Title,
+                    start: day,
+                    end: day,
+                    id: doc.BIIN_PROJECT_ID
+                }
+            });
+        console.log('events: ', events)
+        setEvents(events);
     }
-  };
 
 
-  useEffect(() => {
-    currDateProject();
-    filterDueprojects();
-    filterNonDueprojects();
-  }, [displayCurrent, toggle]);
+    useEffect(() => {
+        fetchFavorites()
+    }, [user])
 
-  return (
-    <>
-          <section className="glass">
-            <div className="calender-area-custom">
-              <div className="status">
-                <Calendar onSelectEvent={handleDisplayProject} />
-                {drawerIsOpen && <Backdrop onClick={closeDrawerHandler} />}
-                <SideDrawer
-                  show={drawerIsOpen}
-                  onCancel={closeDrawerHandler}
-                  footerclassName="place-item__modal-actions"
-                  footer={<IButton danger={true} onClick={closeDrawerHandler}>CLOSE</IButton>}
-                  header={`Projects due on ${displayedProject["Next due date (Y-m-d)"]}`}
-                >
-                  <div className="cards">
-                    {listProjects.map((item) => (
-                      <Button
-                        variant="contained"
-                        key={item["URL"]}
-                        value={item}
-                        style={{
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          margin: "10px",
-                          textAlign: "left",
-                        }}
-                        onClick={() => {
-                          setDisplayedProject(item);
-                          setDisplayCurrent(3);
-                          openMapHandler();
-                        }}
-                      >
-                        ・{item["Title"]}
-                      </Button>
-                    ))}
-                  </div>
-                </SideDrawer>
-                {showMap && <Backdrop onClick={closeMapHandler} />}
-                <Modal
-                  show={showMap}
-                  onCancel={closeMapHandler}
-                  contentclassName="place-item__modal-content"
-                  footerclassName="place-item__modal-actions"
-                  footer={
-                    <IButton danger={true} onClick={closeMapHandler}>
-                      CLOSE
-                    </IButton>
-                  }
-                  style={{ width: "50vw", left: "45%" }}
-                  header={"Project Information"}
-                >
-                  <div className="cards">
-                    <div className="card">
-                      <div>
-                        <h3 className="percentage">Title:</h3>
-                      </div>
-                      <div>
-                        {displayedProject.Title}
-                      </div>
-                    </div>
-                    <div className="card">
-                      <div>
-                        <h3 className="percentage">Award Type:</h3>
-                      </div>
-                      <div>
-                        <p>{displayedProject["Award Type"]}</p>
-                      </div>
-                    </div>
-                    <div className="card">
-                      <div>
-                        <h3 className="percentage">Date Due:</h3>
-                      </div>
-                      <div>
-                        <h2>{displayedProject["Next due date (Y-m-d)"]}</h2>
-                      </div>
-                    </div>
-                    <div className="card">
-                      <div>
-                        <h3 className="percentage">Program ID:</h3>
-                      </div>
-                      <div>
-                        <p>{displayedProject["Program ID"]}</p>
-                      </div>
-                    </div>
-                    <div className="card">
-                      <div>
-                        <h3 className="percentage">NSF/PD Num:</h3>
-                      </div>
-                      <div>
-                        <p>{displayedProject["NSF/PD Num"]}</p>
-                      </div>
-                    </div>
-                    <div className="card">
-                      <div>
-                        <h3 className="percentage">Status:</h3>
-                      </div>
-                      <div>
-                        <p>{displayedProject["Status"]}</p>
-                      </div>
-                    </div>
-                    <div className="card">
-                      <div>
-                        <h3 className="percentage">URL:</h3>
-                      </div>
-                      <div>
-                        <p>{displayedProject.URL}</p>
-                      </div>
-                    </div>
-                    <a
-                      href={`${displayedProject["Solicitation URL"]}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      More Details
-                    </a>
-                  </div>
-                </Modal>
-              </div>
-              {/* <Button inverse onClick={() => { handleDisplayCurr(); openMapHandler() }}>
-                Display The Selected Project
-              </Button> */}
-            </div>
+    useEffect(() => {
+        { console.log('My Projects: ', myProjects) }
+        if (myProjects?.favoriteList) {
 
-           
-          </section>
+            retrieveProjects()
+        }
+    }, [myProjects])
 
-    </>
-  );
-}
+    const onSelectEvent = async (event) => {
+        console.log('event: ', event)
+        const q = query(collection(db, "Projects"), where("BIIN_PROJECT_ID", "==", event.id))
+        const docSnap = await getDocs(q);
+        console.log(docSnap)
+        setDocData(docSnap.docs[0].data())
+        setVisible(!visible)
+    }
 
 
+    return (
+        <>
+            <CModal visible={visible} onClose={() => setVisible(false)}>
+                <CModalHeader>
+                    <CModalTitle>{docData.Title}</CModalTitle>
+                </CModalHeader>
+                <CModalBody>
+                    {docData.Synopsis}
+                </CModalBody>
+                <CModalFooter>
+                    <CButton color="secondary" onClick={() => setVisible(false)}>Close</CButton>
+                </CModalFooter>
+            </CModal>
+            <Calendar localizer={localizer} events={events}
+                defaultDate={new Date()}
+                defaultView="month"
+                style={{ height: "90vh" }}
+                onSelectEvent={onSelectEvent}
+                startAccessor={(event) => { return new Date(event.start) }}
+                endAccessor="end" 
+                toolbar={true}
+                views={{
+                  day: true,
+                  week: true,
+                  month: true,
+                  year: Year,
+                  agenda: true,
+                }}
+                messages={{ year: 'Year' }}
+              
+                />
+        </>
+
+    );
+};
+
+export default MyCal;

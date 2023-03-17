@@ -1,240 +1,45 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {  min-width:600px; min-height: 800px;}
-
-h1 { 
-  color: #426696;
-  font-weight: 600;
-  font-size: 3rem;
-  opacity: 0.8;
-}
-
-
-h2,
-p {
-  color: #658ec6;
-  font-weight: 500;
-  opacity: 0.8;
-  font-size: 90%;
-}
-
-
-
-h3 {
-  color: #426696;
-  font-weight: 600;
-  opacity: 0.8;
-  font-size: 90%;
-}
-
-main {
-  font-family: "Poppins", sans-serif;
-  min-height: 100vh;
-  background: rgb(182, 181, 181);
+.year {
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.glass {
-  background: white;
-  min-height: 90vh;
-  width: 96%;
-  background: linear-gradient(
-    to right bottom,
-    rgba(255, 255, 255, 0.7),
-    rgba(255, 255, 255, 0.3)
-  );
-  border-radius: 2rem;
-  z-index: 2;
-  backdrop-filter: blur(2rem);
-  display: flex;
-}
-
-.dashboard {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  text-align: center;
-  background: linear-gradient(
-    to right bottom,
-    rgba(255, 255, 255, 0.7),
-    rgba(255, 255, 255, 0.3)
-  );
-  position: relative;
-  border-radius: 2rem;
-}
-.search-toggle {
-  flex: 1;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: top;
-  text-align: center; 
-  position: absolute;
-  gap: 10px;
-  top: 2%;
-  z-index: 1000;
-}
-
-.projects-list {
-  z-index: 1;
-  position: relative;
-  bottom: -5.5%;
-  border-radius: 5%;
-  max-height: 80vh;
-  background-color: rgb(225, 243, 243);
-}
-
-
-
-
-.calender-area-custom {
-  margin: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  width: 65%;
-}
-
-.status {
-  background-color: white;
-  border: 2px solid black;
-  border-radius: 0.5%;
-}
-
-.card {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  background: linear-gradient(
-    to left top,
-    rgba(255, 255, 255, 0.8),
-    rgba(255, 255, 255, 0.5)
-  );
-  border-radius: 1rem;
-  margin: 1rem 0rem;
-  padding: 1.5rem;
-  box-shadow: 6px 6px 20px rgba(122, 122, 122, 0.212);
-  justify-content: flex-start;
-  gap: 10px;
-}
-
-
-.card-info {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 
-.percentage {
+.month {
+  margin: 5px 5px 15px 5px;
+}
+
+.month-name {
+  color: #ccbe88;
   font-weight: bold;
-  background: linear-gradient(to right top, #40887b, #247885);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-left: 20px;
 }
 
-.form-control {
-    width: 15vw
+.day {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
 }
 
-
-.select {
-  height: 10vh;
+.date {
+  width: 30px;
+  height: 30px;
+  /* background: white; */
+  /* border-radius: 50px; */
+  border: none;
+  outline: none;
 }
 
-.input-label {
-  font-size: 2vh,
+.date.in-month:hover {
+  cursor: pointer;
+  background: #ccbe88;
 }
 
-.text-field {
-  overflow: scroll;
-  max-width: 20vw;
-  max-height: 30vh;
-  z-index: 1000; 
-  background: black;
-  
+.today {
+  background: #ccbe88;
 }
 
-.text-field::-webkit-scrollbar {
-  display: none;
-}
-
-.field-selects {
-  overflow: scroll;
-  max-width: 28vw;
-  max-height: 80vh;
-  border-radius: 5%;
-  border: 2px solid rgb(0, 0, 0);
-  display : flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 2rem;
-  background-color: rgb(245, 245, 245);
-}
-
-body::-webkit-scrollbar {
-  display: none;
-}
-
-.field-selects::-webkit-scrollbar {
-  display: none;
-}
-
-@media (max-width: 990px) {
-  h3 {
-    color: #426696;
-    font-weight: 600;
-    opacity: 0.8;
-    font-size: 80%;
-  }
-
-  p {
-    font-size: 60%;
-  }
-
-
-  .glass {
-    display: block;
-  }
-  .field-selects {
-    max-width: 40vw;
-    max-height: 30vh;
-    bottom: 10%;
-    position: absolute;
-  }
-
-  .projects-list {
-    height: 50vh;
-    position: relative;
-  }
-
-  .calender-area-custom{
-    height: 80vh;
-    margin-top: 50px;
-  }
-  .text-field{
-    max-width: 13rem;
-  }
-
-  .card-2 {
-    flex-direction: column;
-  }
-
-  .card-info-2 {
-    margin-left: -5%;
-  }
-
-  .dashboard {
-    margin-top: 100px;
-  }
+.date.prev-month,
+.date.next-month {
+  color: grey;
 }

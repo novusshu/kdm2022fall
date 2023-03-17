@@ -6,9 +6,11 @@ const Calendar = React.lazy(() => import('./views/Calendar/MyCal'))
 const FileList = React.lazy(() => import('./views/Table/UploadedFiles'))
 const File = React.lazy(() => import('./views/Table/TableFormRendering'))
 const QuestionAnswer = React.lazy(() => import('./views/QnA/QuestionAnswer'))
-const ProjectList = React.lazy(() => import('./views/Projects/ProjectList'))
+const Search = React.lazy(() => import('./views/Projects/ProjectList'))
 const Project = React.lazy(() => import('./views/Projects/Project'))
-const Search = React.lazy(() => import('./views/Search/Search'))
+const MyList = React.lazy(() => import('./views/Projects/MyList'))
+const Gantt = React.lazy(() => import('./views/Planner/GanttChart'))
+const Profile = React.lazy(() => import('./views/UserConfig/Profile'))
 // const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
 // // Base
@@ -65,9 +67,11 @@ const routes = [
   { path: '/filelist', name: 'File List', element: FileList },
   { path: '/files/:formId', name: 'Files', element: File },
   // { path: '/qa', name: 'Q & A', element: QuestionAnswer },
-  { path: '/projectlist', name: 'Project List', element: ProjectList },
+  { path: '/projectlist', name: 'Search', element: Search },
   { path: '/projects/:projectID', name: 'Projects', element: Project },
-  { path: '/search', name: 'Search', element: Search },
+  { path: '/mylist', name: 'My List', element: MyList },
+  { path: '/gantt', name: 'Gantt', element: Gantt },
+  { path: '/profile', name: 'Profile', element: Profile}
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },
   // { path: '/theme/colors', name: 'Colors', element: Colors },
   // { path: '/theme/typography', name: 'Typography', element: Typography },

@@ -26,6 +26,7 @@ import avatar8 from '../../assets/images/avatars/8.jpg'
 
 import { useNavigate} from "react-router-dom";
 import { useUserAuth } from '../../../context/UserAuthContext'
+import { Link } from 'react-router-dom'
 
 const AppHeaderDropdown = () => {
   const { logOut, userData } = useUserAuth();
@@ -78,7 +79,7 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem> */}
         {/* <CDropdownHeader className="bg-light fw-semibold py-2">Settings</CDropdownHeader> */}
-        <CDropdownItem href="#">
+        <CDropdownItem href="/user/profile">
           <CIcon icon={cilUser} className="me-2" />
           Profile
         </CDropdownItem>
