@@ -39,6 +39,14 @@ My Projects:
 - Template project scheduler with milestones and timeframe
 - filter for project to show or not 
 
+Gantt chart:
+- Toolbar
+- New header: including action tools
+- Delete
+- reorder
+- filter
+
+
 4. Dashboard
 5. Visualization Awards
 
