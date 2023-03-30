@@ -3,15 +3,18 @@ import { useFormContext } from "react-hook-form";
 import ReactTooltip from "react-tooltip";
 import { AiFillQuestionCircle } from "react-icons/ai";
 import theme from "./theme";
+import { CFormLabel, CRow, CFormSelect, CCol } from "@coreui/react";
 
 export const Select = ({
   name,
   label,
-  className,
+  // className,
   labelClass,
   inputClass = "form-control",
   options,
   instructions,
+  readOnly,
+  defaultValue,
   ...rest
 }) => {
   const {
@@ -21,13 +24,14 @@ export const Select = ({
   const highlightColor = theme.highlightColor;
 
   return (
-    <div className={className}>
+    // <div className={className}>
+    <CRow className="mb-3">
       <ReactTooltip backgroundColor={highlightColor} />
 
-      <label
+      <CFormLabel
         htmlFor={name}
         aria-label={label}
-        className={`form-label ${labelClass}`}
+        className={`form-label col-sm-3 ${labelClass}`}
       >
         {label}
         {instructions && (
@@ -41,21 +45,25 @@ export const Select = ({
             data-tip={instructions}
           />
         )}
-      </label>
-      <select
+      </CFormLabel>
+      <CCol className="col-sm-9">
+      <CFormSelect
         id={name}
         className={`${inputClass} ${errors[name] ? "is-invalid" : ""}`}
+        disabled={readOnly}
+        defaultValue={defaultValue}
         {...register(name)}
         {...rest}
       >
-        <option></option>
+        {/* <option></option> */}
         {options.map((value) => (
           <option key={value} value={value}>
             {value}
           </option>
         ))}
-      </select>
+      </CFormSelect>
       <div className="invalid-feedback">{errors[name]?.message}</div>
-    </div>
+      </CCol>
+    </CRow>
   );
 };
