@@ -3,9 +3,10 @@ import { useFormContext } from "react-hook-form";
 import {
   AiFillQuestionCircle,
 } from "react-icons/ai";
+import { CRow, CFormInput, CFormLabel, CCol } from "@coreui/react";
 
 export const Input = ({
-  labelStyle,
+  // labelStyle,
   name,
   label,
   className,
@@ -25,13 +26,13 @@ export const Input = ({
   } = useFormContext();
 
   return (
-    <div className={className}>
+    <CRow className="mb-3">
       {/* <ReactTooltip backgroundColor={highlightColor} /> */}
 
-      <label
+      <CFormLabel
         htmlFor={name}
-        style={errors[name] ? { color: "red", fontWeight: "bold" } : labelStyle}
-        className={`form-label ${labelClass} ${
+        // style={errors[name] ? { color: "red", fontWeight: "bold" } : labelStyle}
+        className={`form-label col-sm-3 ${labelClass} ${
           required && errors[name] && "text-danger"
         }`}
       >
@@ -47,10 +48,11 @@ export const Input = ({
             data-tip={instructions}
           />
         )}
-      </label>
-        <input
+      </CFormLabel>
+      <CCol className="col-sm-9">
+        <CFormInput
           type={type || "text"}
-          className={`${inputClass} ${errors[name] ? "is-invalid" : ""}`}
+          className={` ${inputClass} ${errors[name] ? "is-invalid border border-danger" : ""}`}
           id={name}
           placeholder={inputPlaceholder}
           {...register(name)}
@@ -58,6 +60,7 @@ export const Input = ({
           // autoFocus
         />
       <div className="invalid-feedback">{errors[name]?.message}</div>
-    </div>
+      </CCol>
+    </CRow>
   );
 };
