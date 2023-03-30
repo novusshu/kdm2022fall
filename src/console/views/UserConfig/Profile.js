@@ -1,5 +1,5 @@
 import { CButton, CInputGroup } from '@coreui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { CForm, CFormInput } from '@coreui/react'
 import { useUserAuth } from '../../../context/UserAuthContext'
 import { db } from '../../../firebasedb'
@@ -8,49 +8,74 @@ import { collection } from 'firebase/firestore'
 
 const Profile = () => {
 
-
     const { user, userData } = useUserAuth();
 
+    // initialize state variables
+    const [email, setEmail] = useState(userData.email || '');
+    const [firstName, setFirstName] = useState(userData.firstName || '');
+    const [lastName, setLastName] = useState(userData.lastName || '');
+    const [password, setPassword] = useState('');
+    const [userID, setUserID] = useState(user.uid || '');
 
-    const handleSave = async e => {
-        e.preventDefault()
-        console.log(e.target.value)
+    const handleSave = async (e) => {
+        e.preventDefault();
+
         // write to db
         const docRef = doc(db, "Users", user.uid);
-        await updateDoc(docRef, { firstName: e.target.value });
-
-    }
-
-
+        await updateDoc(docRef, { email, firstName, lastName, password, userID });
+    };
 
     return (
-
         <>
-            <CForm  >
+            <CForm>
                 <CFormInput
                     type="email"
                     id="exampleFormControlInput1"
                     label="Email address"
                     placeholder="name@example.com"
-                    text="Must be 8-20 characters long."
-                    aria-describedby="exampleFormControlInputHelpInline"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 <CFormInput
-                label="Name"
-                type="text"
-                id="exampleFormControlInput1"
-                // value={userData.firstName}
+                    label="First Name"
+                    type="text"
+                    id="exampleFormControlInput2"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                />
+                <CFormInput
+                    label="Last Name"
+                    type="text"
+                    id="exampleFormControlInput3"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                />
+                <CFormInput
+                    label="Password"
+                    type="password"
+                    id="exampleFormControlInput4"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <CFormInput
+                    label="User ID"
+                    type="text"
+                    id="exampleFormControlInput5"
+                    value={userID}
+                    onChange={(e) => setUserID(e.target.value)}
                 />
 
-
-                <CButton color="primary" className="px-4" type='submit' onClick={handleSave}>Save</CButton>
-                <CButton color="warning" className="px-4" type='submit'>Cancel</CButton>
-
+                <div style={{display: "flex", justifyContent: "space-between", marginTop: "20px"}}>
+                  <CButton color="primary" className="px-4" type="submit" onClick={handleSave}>
+                      Save
+                  </CButton>
+                  <CButton color="warning" className="px-4" type="submit">
+                      Cancel
+                  </CButton>
+                </div>
             </CForm>
-
-            {/*  */}
         </>
-    )
-}
+    );
+};
 
-export default Profile
+export default Profile;
