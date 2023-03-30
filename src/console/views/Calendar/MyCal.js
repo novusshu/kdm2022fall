@@ -91,7 +91,7 @@ const MyCal = () => {
   const handleFilterKeywordChange = (e) => {
     setFilterKeyword(e.target.value);
   };
-  
+
   const filteredEvents = events.filter((event) => {
     if (!filterKeyword) return true;
     const title = event.title.toLowerCase();
@@ -103,54 +103,55 @@ const MyCal = () => {
     <>
       <CModal visible={visible} onClose={() => setVisible(false)}>
         <CModalHeader>
-  <CModalTitle>{docData.Title}</CModalTitle>
-</CModalHeader>
-<CModalBody>
-  {docData.Synopsis}
-</CModalBody>
-<CModalFooter>
-  <CButton color="secondary" onClick={() => setVisible(false)}>
-    Close
-  </CButton>
-</CModalFooter>
-</CModal>
-<div className="filter-container" style={{ display: "flex", justifyContent: "center" }}>
-  <label htmlFor="filter-input">Filter by keywords:</label>
-  <input
-    type="text"
-    id="filter-input"
-    onChange={handleFilterKeywordChange}
-    value={filterKeyword}
-  />
-  <button onClick={retrieveProjects}>Filter</button>
-	</div>
+          <CModalTitle>{docData.Title}</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          {docData.Synopsis}
+        </CModalBody>
+        <CModalFooter>
+          <CButton color="secondary" onClick={() => setVisible(false)}>
+            Close
+          </CButton>
+        </CModalFooter>
+      </CModal>
+      <div className="filter-container" style={{ display: "flex", justifyContent: "center" }}>
+        <label htmlFor="filter-input">Filter by keywords:</label>
+        <input
+          type="text"
+          id="filter-input"
+          onChange={handleFilterKeywordChange}
+          value={filterKeyword}
+        />
+        <button onClick={retrieveProjects}>Filter</button>
+      </div>
 
-	<Calendar
-		localizer={localizer}
-		events={events}
-		defaultDate={new Date()
-		}
-			defaultView="month"
-		style={{ height: "90vh" 
-		}
-		}
-		onSelectEvent={onSelectEvent}
-		startAccessor={(event) => new Date(event.start)
-		}
-		endAccessor="end"
-		toolbar={true
-		}
-		views={{
-		day: true,
-		week: true,
-		month: true,
-		year: Year,
-		agenda: true,
-		}}
-		messages={{ year: "Year" }}
-	/>
-	</>
-	);
+      <Calendar
+        localizer={localizer}
+        events={events}
+        defaultDate={new Date()
+        }
+        defaultView="month"
+        style={{
+          height: "90vh"
+        }
+        }
+        onSelectEvent={onSelectEvent}
+        startAccessor={(event) => new Date(event.start)
+        }
+        endAccessor="end"
+        toolbar={true
+        }
+        views={{
+          day: true,
+          week: true,
+          month: true,
+          year: Year,
+          agenda: true,
+        }}
+        messages={{ year: "Year" }}
+      />
+    </>
+  );
 };
 
 export default MyCal;
