@@ -65,7 +65,7 @@ const TableOfProjects = ({ displayResults, selectedResults, setSelectedResults }
                         <CTableDataCell>
                             <div className="clearfix">
                                 <div >
-                                    <small className="text-medium-emphasis">{item['Next due date (Y-m-d)']}</small>
+                                    <small className="text-medium-emphasis">{item['Next due date (Y-m-d)'][0]}</small>
                                 </div>
                             </div>
                             {/* <CProgress thin color={item.usage.color} value={item.usage.value} /> */}
