@@ -93,8 +93,8 @@ export default function ProjectList() {
     const favoriteDB = 'Favorites'
     const handleSaveFavorites = async () => {
         // Update the user document with the new data
-        await updateDoc(doc(db, favoriteDB, user.uid), 
-            { favoriteList: arrayUnion(...selectedResults), timestamp: serverTimestamp()}
+        await updateDoc(doc(db, favoriteDB, user.uid),
+            { favoriteList: arrayUnion(...selectedResults), timestamp: serverTimestamp() }
         )
         console.log('export selected to favorites: ', selectedResults)
     }
@@ -123,13 +123,15 @@ export default function ProjectList() {
                     <>
                         <CCol xs="8" lg="4">
                             <CButton color="secondary"
-                                onClick={handleSaveFavorites} disabled={selectedResults.length === 0}>
+                                onClick={handleSaveFavorites}
+                                // disabled={selectedResults.length === 0}
+                                >
                                 Export Selected to Favorites
                             </CButton>
                         </CCol>
-                        <TableOfProjects displayResults={searchResults} 
-                        selectedResults={selectedResults} 
-                        setSelectedResults={setSelectedResults} />
+                        <TableOfProjects displayResults={searchResults}
+                            selectedResults={selectedResults}
+                            setSelectedResults={setSelectedResults} />
                     </>
                 }
             </CRow>
