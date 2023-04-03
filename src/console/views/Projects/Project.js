@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore";
 import QuestionAnswer from "../QnA/QuestionAnswer";
 import Card from 'react-bootstrap/Card';
+import { retrieveProjects } from "../utils";
 
 import { useUserAuth } from "../../../context/UserAuthContext";
 
@@ -42,19 +43,33 @@ export default function Project() {
         return result;
     }
 
+    // async function fetchData( ) {
+    //     const docSnap = await getDoc(doc(db, 'Project', ))
+    //     if (docSnap.exists()) {
+    //         // console.log("Document data:", docSnap.data());
+    //         setStateValue(docSnap.data())
+    //     } else {
+    //         console.log("No such document!");
+    //     }
+    // }
+
+    const retrieveProjects = async () => {
+        const q = query(collection(db, "Projects"),
+            where("BIIN_PROJECT_ID", "==", projectID))
+        const querySnapshot = await getDocs(q);
+        // let count = 0
+        querySnapshot.forEach(docSnapShot => {
+            const raw = docSnapShot.data();
+            // console.log('raw: ', raw)
+            setProject(raw)
+        })
+    }
     useEffect(() => {
         let dbproject = []
 
-        const q = query(collection(db, "uploads_content"),
-            where("userID", "==", user.uid))
-        const unsubscribe = onSnapshot(q, (qSnapShot) => {
-            qSnapShot.forEach(docSnapShot => {
-                const raw = docSnapShot.data();
-                dbproject.push(
-                    raw.form_content.filter(e => e["NSF/PD Num"] == projectID)[0])
-            })
-            setProject(dbproject.filter(e => e !== undefined)[0])
-        })
+        retrieveProjects()
+        // setProject(prev => prev[0])
+        console.log('project: ', project)
     }, [user])
 
 

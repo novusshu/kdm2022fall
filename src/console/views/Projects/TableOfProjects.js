@@ -50,7 +50,7 @@ const TableOfProjects = ({ displayResults, selectedResults, setSelectedResults }
                         <CTableDataCell>
                             <div>
                                 <Link
-                                    to={`/user/projects/${item['NSF/PD Num']}`}
+                                    to={`/user/projects/${item['BIIN_PROJECT_ID']}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
