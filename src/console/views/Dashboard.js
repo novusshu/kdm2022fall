@@ -28,6 +28,10 @@ import {
   cibCcPaypal,
   cibCcStripe,
   cibCcVisa,
+  cibBluetoothB,
+  cibBtc,
+  cibWindows,
+  cibZoom,
   cibGoogle,
   cibFacebook,
   cibLinkedin,
@@ -58,10 +62,10 @@ const Dashboard = () => {
   const random = (min, max) => Math.floor(Math.random() * (max - min + 1) + min)
 
   const progressExample = [
-    { title: 'Reads', value: '29.703', percent: 40, color: 'success' },
-    { title: 'Searches', value: '24.093', percent: 20, color: 'info' },
-    { title: 'Questions', value: '78.706', percent: 60, color: 'warning' },
-    { title: 'Answers', value: '22.123', percent: 80, color: 'danger' },
+    { title: 'Reads', value: '29', percent: 0, color: 'success' },
+    { title: 'Searches', value: '93', percent: 0, color: 'info' },
+    { title: 'Questions', value: '78', percent: 20, color: 'warning' },
+    { title: 'Summaries', value: '60', percent: 10, color: 'danger' },
     // { title: 'Bounce Rate', value: 'Average Rate', percent: 40.15, color: 'primary' },
   ]
 
@@ -93,15 +97,15 @@ const Dashboard = () => {
       user: {
         name: 'Yiorgos Avraamu',
         new: true,
-        registered: 'Jan 1, 2021',
+        registered: 'Jan 1, 2022',
       },
       country: { name: 'USA', flag: cifUs },
       usage: {
         value: 50,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
+        period: 'Jun 11, 2022 - Jul 10, 2022',
         color: 'success',
       },
-      payment: { name: 'Mastercard', icon: cibCcMastercard },
+      payment: { name: 'Mastercard', icon: cibBluetoothB },
       activity: '10 sec ago',
     },
     {
@@ -109,15 +113,15 @@ const Dashboard = () => {
       user: {
         name: 'Avram Tarasios',
         new: false,
-        registered: 'Jan 1, 2021',
+        registered: 'Jan 1, 2022',
       },
       country: { name: 'Brazil', flag: cifBr },
       usage: {
         value: 22,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
+        period: 'Jun 11, 2022 - Jul 10, 2022',
         color: 'info',
       },
-      payment: { name: 'Visa', icon: cibCcVisa },
+      payment: { name: 'Visa', icon: cibFacebook },
       activity: '5 minutes ago',
     },
     {
@@ -126,22 +130,22 @@ const Dashboard = () => {
       country: { name: 'India', flag: cifIn },
       usage: {
         value: 74,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
+        period: 'Jun 11, 2022 - Jul 10, 2022',
         color: 'warning',
       },
-      payment: { name: 'Stripe', icon: cibCcStripe },
+      payment: { name: 'Stripe', icon: cibBtc },
       activity: '1 hour ago',
     },
     {
       avatar: { src: avatar4, status: 'secondary' },
-      user: { name: 'Enéas Kwadwo', new: true, registered: 'Jan 1, 2021' },
+      user: { name: 'Enéas Kwadwo', new: true, registered: 'Jan 1, 2022' },
       country: { name: 'France', flag: cifFr },
       usage: {
         value: 98,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
+        period: 'Jun 11, 2022 - Jul 10, 2022',
         color: 'danger',
       },
-      payment: { name: 'PayPal', icon: cibCcPaypal },
+      payment: { name: 'PayPal', icon: cibGoogle },
       activity: 'Last month',
     },
     {
@@ -149,12 +153,12 @@ const Dashboard = () => {
       user: {
         name: 'Agapetus Tadeáš',
         new: true,
-        registered: 'Jan 1, 2021',
+        registered: 'Jan 1, 2022',
       },
       country: { name: 'Spain', flag: cifEs },
       usage: {
         value: 22,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
+        period: 'Jun 11, 2022 - Jul 10, 2022',
         color: 'primary',
       },
       payment: { name: 'Google Wallet', icon: cibCcApplePay },
@@ -165,15 +169,15 @@ const Dashboard = () => {
       user: {
         name: 'Friderik Dávid',
         new: true,
-        registered: 'Jan 1, 2021',
+        registered: 'Jan 1, 2022',
       },
       country: { name: 'Poland', flag: cifPl },
       usage: {
         value: 43,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
+        period: 'Jun 11, 2022 - Jul 10, 2022',
         color: 'success',
       },
-      payment: { name: 'Amex', icon: cibCcAmex },
+      payment: { name: 'Amex', icon: cibWindows },
       activity: 'Last week',
     },
   ]
@@ -186,9 +190,9 @@ const Dashboard = () => {
           <CRow>
             <CCol sm={5}>
               <h4 id="traffic" className="card-title mb-0">
-                Traffic
+                Usage
               </h4>
-              <div className="small text-medium-emphasis">January - July 2021</div>
+              <div className="small text-medium-emphasis">January - July 2022</div>
             </CCol>
             <CCol sm={7} className="d-none d-md-block">
               <CButton color="primary" className="float-end">
@@ -313,7 +317,7 @@ const Dashboard = () => {
       <CRow>
         <CCol xs>
           <CCard className="mb-4">
-            <CCardHeader>Traffic {' & '} Sales</CCardHeader>
+            <CCardHeader>Open Projects</CCardHeader>
             <CCardBody>
               <CRow>
                 <CCol xs={12} md={6} xl={6}>
@@ -321,13 +325,13 @@ const Dashboard = () => {
                     <CCol sm={6}>
                       <div className="border-start border-start-4 border-start-info py-1 px-3">
                         <div className="text-medium-emphasis small">New Reads</div>
-                        <div className="fs-5 fw-semibold">9,123</div>
+                        <div className="fs-5 fw-semibold">9</div>
                       </div>
                     </CCol>
                     <CCol sm={6}>
                       <div className="border-start border-start-4 border-start-danger py-1 px-3 mb-3">
                         <div className="text-medium-emphasis small">New Questions</div>
-                        <div className="fs-5 fw-semibold">22,643</div>
+                        <div className="fs-5 fw-semibold">22</div>
                       </div>
                     </CCol>
                   </CRow>
@@ -351,13 +355,13 @@ const Dashboard = () => {
                     <CCol sm={6}>
                       <div className="border-start border-start-4 border-start-warning py-1 px-3 mb-3">
                         <div className="text-medium-emphasis small">New Projects</div>
-                        <div className="fs-5 fw-semibold">78,623</div>
+                        <div className="fs-5 fw-semibold">2</div>
                       </div>
                     </CCol>
                     <CCol sm={6}>
                       <div className="border-start border-start-4 border-start-success py-1 px-3 mb-3">
-                        <div className="text-medium-emphasis small">New Answers</div>
-                        <div className="fs-5 fw-semibold">49,123</div>
+                        <div className="text-medium-emphasis small">New Summaries</div>
+                        <div className="fs-5 fw-semibold">15</div>
                       </div>
                     </CCol>
                   </CRow>
@@ -405,10 +409,10 @@ const Dashboard = () => {
                     <CTableHeaderCell className="text-center">
                       <CIcon icon={cilPeople} />
                     </CTableHeaderCell>
-                    <CTableHeaderCell>User</CTableHeaderCell>
+                    <CTableHeaderCell>Collaborator</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Country</CTableHeaderCell>
                     <CTableHeaderCell>Usage</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Payment Method</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Area</CTableHeaderCell>
                     <CTableHeaderCell>Activity</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>

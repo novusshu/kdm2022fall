@@ -6,8 +6,8 @@ export function initTasks() {
     {
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
       end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
-      name: "Some Project",
-      id: "ProjectSample",
+      name: "NSF Proposal",
+      id: "Literature review",
       progress: 25,
       type: "project",
     },
@@ -20,7 +20,7 @@ export function initTasks() {
         12,
         28
       ),
-      name: "Idea",
+      name: "Ideation",
       id: "Task 0",
       progress: 45,
       type: "task",
@@ -29,7 +29,7 @@ export function initTasks() {
     {
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 2),
       end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4, 0, 0),
-      name: "Research",
+      name: "Empirical Research",
       id: "Task 1",
       progress: 25,
       dependencies: ["Task 0"],

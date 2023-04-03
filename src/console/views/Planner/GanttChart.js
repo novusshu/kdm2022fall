@@ -28,7 +28,7 @@ const GanttChart = () => {
 	// *** USE STATE ***
 	const [tasks, setTasks] = useState(null);
 	const [view, setView] = useState(ViewMode.Month);
-	const [isChecked, setIsChecked] = useState(true);
+	const [isChecked, setIsChecked] = useState(false);
 	const [visible, setVisible] = useState(false);
 	const [task, setTask] = useState(null);
 	const [readOnly, setReadOnly] = useState(true);
@@ -163,11 +163,11 @@ const GanttChart = () => {
 			{/* <CCol className="mb-2">
                 <CButton color="primary">Generate Timeline from Favorites</CButton>
             </CCol> */}
-			<CRow>
-				<CCol className="mb-2">
+			<CRow className="justify-content-end">
+				<CCol xs={1} className="mb-2">
 					<CButton color="primary" onClick={saveTasks}>Save</CButton>
 				</CCol>
-				<CCol className="mb-2">
+				<CCol  xs={2} className="mb-2">
 					<CButton color="primary" onClick={addTask}>Add New Task</CButton>
 				</CCol>
 			</CRow>

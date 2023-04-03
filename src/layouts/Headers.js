@@ -26,7 +26,7 @@ export const PublicHeader = () => {
                 alt="BBIN logo"
               />
               {"   "}
-              BIIN
+              SmartGrant
             </Navbar.Brand> 
             <>
                 <Nav.Link href="/#about" className="scrollto">
