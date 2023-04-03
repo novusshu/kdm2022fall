@@ -66,7 +66,7 @@ const routes = [
   { path: '/calendar', name: 'Calendar', element: Calendar },
   { path: '/filelist', name: 'File List', element: FileList },
   { path: '/files/:formId', name: 'Files', element: File },
-  // { path: '/qa', name: 'Q & A', element: QuestionAnswer },
+  { path: '/qa', name: 'Q & A', element: QuestionAnswer },
   { path: '/projectlist', name: 'Search', element: Search },
   { path: '/projects/:projectID', name: 'Projects', element: Project },
   { path: '/mylist', name: 'My List', element: MyList },
